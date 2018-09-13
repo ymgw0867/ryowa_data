@@ -496,6 +496,7 @@ namespace ryowa_DATA.data
             int jkh = 0;
             int svSID = 0;
             bool colorStatus = true;
+            int genbaKbn = 0;           // 2018/09/13 社員マスター現場手当有無
 
             // 集計データ読込
             foreach (var t in s)
@@ -556,18 +557,22 @@ namespace ryowa_DATA.data
                         var m = dts.M_社員.Single(a => a.ID == j.sID);
                         cs.sArray[0].sName = m.氏名;
                         jkh = m.人件費単価;
+                        genbaKbn = m.現場手当有無;    // 2018/09/13
                     }
                     else
                     {
                         cs.sArray[0].sName = "";
                         jkh = 0;
+                        genbaKbn = 0;    // 2018/09/13
                     }
 
                     cs.sArray[0].sHaichiDays = md.getHaichidays(j.sID, t.kID); // 配置日数取得
                     cs.sArray[0].sJinkanhi = (int)(jkh / Properties.Settings.Default.tempdays * cs.sArray[0].sHaichiDays);   // 人件費  
 
                     // 現場日数
-                    if (gKbn == global.flgOff)
+                    /* 工事コードが「現場」に社員マスターの「現場手当有無」が
+                     * 「有り」を条件に追加：2018/09/13 */
+                    if (gKbn == global.flgOff && genbaKbn == global.flgOn)
                     {
                         cs.sArray[0].sGanbaDays = j.cnt;
                     }
