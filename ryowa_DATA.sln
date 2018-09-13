@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ryowa_DATA", "ryowa_DATA\ryowa_DATA.csproj", "{BA6A1164-8D95-4341-AD32-0CB8581AAA35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ryowa_Kintai", "ryowa_Kintai\ryowa_Kintai.csproj", "{169AB266-AB63-4554-99E2-BEF17B5341D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ryowa_Genba", "ryowa_Genba\ryowa_Genba.csproj", "{4D45B7FF-840E-4C4C-A186-FA6CABDDD930}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ryowa_MailReceive", "ryowa_MailReceive\ryowa_MailReceive.csproj", "{60653D5F-E892-4747-BCF2-F57D9C4CB416}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ryowa_Confir", "ryowa_Confir\ryowa_Confir.csproj", "{2868F79E-C64A-4DE1-B722-EF80540556C3}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "genbaSetup", "genbaSetup\genbaSetup.vdproj", "{47727CD4-285C-4944-A88F-BDBA1E52F79A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "confirSetup", "confirSetup\confirSetup.vdproj", "{5BE58991-912C-47DD-A793-6DD2E1FF5AD1}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "mailRecSetup", "mailRecSetup\mailRecSetup.vdproj", "{6E399739-3FE5-47C6-A09A-967CED45F9C0}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "dataSetup", "dataSetup\dataSetup.vdproj", "{AD47CC92-2850-4E6D-9397-4282E4C21569}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "kintaiSetup", "kintaiSetup\kintaiSetup.vdproj", "{4ADACE58-372D-4DF2-9FD0-3729B08D5650}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA6A1164-8D95-4341-AD32-0CB8581AAA35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6A1164-8D95-4341-AD32-0CB8581AAA35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6A1164-8D95-4341-AD32-0CB8581AAA35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6A1164-8D95-4341-AD32-0CB8581AAA35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{169AB266-AB63-4554-99E2-BEF17B5341D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169AB266-AB63-4554-99E2-BEF17B5341D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{169AB266-AB63-4554-99E2-BEF17B5341D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{169AB266-AB63-4554-99E2-BEF17B5341D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D45B7FF-840E-4C4C-A186-FA6CABDDD930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D45B7FF-840E-4C4C-A186-FA6CABDDD930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D45B7FF-840E-4C4C-A186-FA6CABDDD930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D45B7FF-840E-4C4C-A186-FA6CABDDD930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60653D5F-E892-4747-BCF2-F57D9C4CB416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60653D5F-E892-4747-BCF2-F57D9C4CB416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60653D5F-E892-4747-BCF2-F57D9C4CB416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60653D5F-E892-4747-BCF2-F57D9C4CB416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2868F79E-C64A-4DE1-B722-EF80540556C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2868F79E-C64A-4DE1-B722-EF80540556C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2868F79E-C64A-4DE1-B722-EF80540556C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2868F79E-C64A-4DE1-B722-EF80540556C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47727CD4-285C-4944-A88F-BDBA1E52F79A}.Debug|Any CPU.ActiveCfg = Debug
+		{47727CD4-285C-4944-A88F-BDBA1E52F79A}.Release|Any CPU.ActiveCfg = Release
+		{5BE58991-912C-47DD-A793-6DD2E1FF5AD1}.Debug|Any CPU.ActiveCfg = Debug
+		{5BE58991-912C-47DD-A793-6DD2E1FF5AD1}.Release|Any CPU.ActiveCfg = Release
+		{6E399739-3FE5-47C6-A09A-967CED45F9C0}.Debug|Any CPU.ActiveCfg = Debug
+		{6E399739-3FE5-47C6-A09A-967CED45F9C0}.Release|Any CPU.ActiveCfg = Release
+		{AD47CC92-2850-4E6D-9397-4282E4C21569}.Debug|Any CPU.ActiveCfg = Debug
+		{AD47CC92-2850-4E6D-9397-4282E4C21569}.Release|Any CPU.ActiveCfg = Release
+		{4ADACE58-372D-4DF2-9FD0-3729B08D5650}.Debug|Any CPU.ActiveCfg = Debug
+		{4ADACE58-372D-4DF2-9FD0-3729B08D5650}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BA6A1164-8D95-4341-AD32-0CB8581AAA35}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ryowa_DATA</RootNamespace>
+    <AssemblyName>ryowa_DATA</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DLP.ICO</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.93.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.93.0\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember.Signed, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.3.0\lib\net45\FastMember.Signed.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MyLibrary">
+      <HintPath>..\..\..\Users\nakayoshi\Documents\MyLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="common\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="common\frmLogin.designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="common\global.cs" />
+    <Compile Include="common\mdbControl.cs" />
+    <Compile Include="common\Utility.cs" />
+    <Compile Include="config\frmConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="config\frmConfig.designer.cs">
+      <DependentUpon>frmConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="data\clsDataUpdate.cs" />
+    <Compile Include="data\clsKintaiData.cs" />
+    <Compile Include="data\clsMailReceive.cs" />
+    <Compile Include="data\clsMounthDays.cs" />
+    <Compile Include="data\clsSumData.cs" />
+    <Compile Include="data\frmKintaiCheckList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="data\frmKintaiCheckList.Designer.cs">
+      <DependentUpon>frmKintaiCheckList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="data\frmSumList2018.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="data\frmSumList2018.Designer.cs">
+      <DependentUpon>frmSumList2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="data\frmSumList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="data\frmSumList.Designer.cs">
+      <DependentUpon>frmSumList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mail\frmMailReceive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mail\frmMailReceive.Designer.cs">
+      <DependentUpon>frmMailReceive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mail\Mail.cs" />
+    <Compile Include="mail\mailData.cs" />
+    <Compile Include="mail\PopClient.cs" />
+    <Compile Include="mail\PopClientException.cs" />
+    <Compile Include="master\frmKojiIDCnv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmKojiIDCnv.Designer.cs">
+      <DependentUpon>frmKojiIDCnv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmHolidayBatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmHolidayBatch.designer.cs">
+      <DependentUpon>frmHolidayBatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmKojiMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmKojiMenu.Designer.cs">
+      <DependentUpon>frmKojiMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmMsMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmMsMail.designer.cs">
+      <DependentUpon>frmMsMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmMsShain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmMsShain.designer.cs">
+      <DependentUpon>frmMsShain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmMsKoji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmMsKoji.designer.cs">
+      <DependentUpon>frmMsKoji.cs</DependentUpon>
+    </Compile>
+    <Compile Include="master\frmShukujitsu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmShukujitsu.designer.cs">
+      <DependentUpon>frmShukujitsu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ryowaDataSet.cs">
+      <DependentUpon>ryowaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ryowaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ryowaDataSet.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="common\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\frmConfig.resx">
+      <DependentUpon>frmConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\frmKintaiCheckList.resx">
+      <DependentUpon>frmKintaiCheckList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\frmSumList2018.resx">
+      <DependentUpon>frmSumList2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\frmSumList.resx">
+      <DependentUpon>frmSumList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mail\frmMailReceive.resx">
+      <DependentUpon>frmMailReceive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmKojiIDCnv.resx">
+      <DependentUpon>frmKojiIDCnv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmHolidayBatch.resx">
+      <DependentUpon>frmHolidayBatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmKojiMenu.resx">
+      <DependentUpon>frmKojiMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmMsMail.resx">
+      <DependentUpon>frmMsMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmMsShain.resx">
+      <DependentUpon>frmMsShain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmMsKoji.resx">
+      <DependentUpon>frmMsKoji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmShukujitsu.resx">
+      <DependentUpon>frmShukujitsu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="ryowaDataSet.xsc">
+      <DependentUpon>ryowaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ryowaDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ryowaDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ryowaDataSet.xss">
+      <DependentUpon>ryowaDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{2A75196C-D9EB-4129-B803-931327F72D5C}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="JRO">
+      <Guid>{AC3B8B4C-B6CA-11D1-9F31-00C04FC29D52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLP.ICO" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
