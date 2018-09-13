@@ -881,7 +881,9 @@ namespace ryowa_Kintai.data
 
         ///----------------------------------------------------------------------------------
         /// <summary>
-        ///     工事部署別集計欄表示 </summary>
+        ///     工事部署別集計欄表示 ：　
+        ///     2018/09/13 休日勤務時間＋法定休日勤務時間＋普通残業＋深夜残業が
+        ///     固定残業時間を超過した分を時間外勤務とする</summary>
         /// <param name="g">
         ///     データグリッドビューオブジェクト</param>
         /// <param name="sYY">
@@ -947,8 +949,8 @@ namespace ryowa_Kintai.data
                 hol -= holD;        
                 hotei -= hoteiD; 
 
-                g[cHolWorkTime2, iX].Value = Utility.intToHhMM(hol);
-                g[cHouteiTm2, iX].Value = Utility.intToHhMM(hotei);
+                g[cHolWorkTime2, iX].Value = Utility.intToHhMM(hol);    // 休日勤務時間
+                g[cHouteiTm2, iX].Value = Utility.intToHhMM(hotei);     // 法定休日勤務時間
 
                 // 宿泊日数
                 s = dts.T_勤怠.Count(a => a.工事ID == t.pID && a.日付.Year == sYY &&
@@ -957,9 +959,10 @@ namespace ryowa_Kintai.data
 
                 g[cStay2, iX].Value = s.ToString();
 
-                g[cHayade2, iX].Value = Utility.intToHhMM(t.pHayade); // 2018/07/11
-                g[cZan2, iX].Value = Utility.intToHhMM(t.pZan);
-                g[cShinya2, iX].Value = Utility.intToHhMM(t.pSinya);
+                g[cHayade2, iX].Value = Utility.intToHhMM(t.pHayade);   // 早出 2018/07/11
+                g[cZan2, iX].Value = Utility.intToHhMM(t.pZan);         // 普通残業
+                g[cShinya2, iX].Value = Utility.intToHhMM(t.pSinya);    // 深夜残業
+
                 g[cKmTuukin2, iX].Value = t.pkm.ToString();
                 g[cKmShiyou2, iX].Value = t.pkmShiyou.ToString();
 
