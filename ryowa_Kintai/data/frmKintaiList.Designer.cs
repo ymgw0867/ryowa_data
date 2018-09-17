@@ -153,9 +153,9 @@
             this.linkLabel1.Font = new System.Drawing.Font("Meiryo UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.linkLabel1.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel1.Image")));
             this.linkLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linkLabel1.Location = new System.Drawing.Point(915, 7);
+            this.linkLabel1.Location = new System.Drawing.Point(912, 7);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(50, 28);
+            this.linkLabel1.Size = new System.Drawing.Size(53, 28);
             this.linkLabel1.TabIndex = 61;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "出勤簿表示";

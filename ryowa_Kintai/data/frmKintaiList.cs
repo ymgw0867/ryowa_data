@@ -63,6 +63,8 @@ namespace ryowa_Kintai.data
         bool changeStatus = false;
         DateTime taDt;  // 退職年月日
 
+        double fixZan = 0;  // 社員固定残業時間
+
         private void frmKintaiList_Load(object sender, EventArgs e)
         {
             // フォーム最小サイズ
@@ -846,14 +848,14 @@ namespace ryowa_Kintai.data
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // 出勤簿表示
-            showKintaiData();
+            //showKintaiData();     // 2018/09/17 コメント化
         }
 
         ///-------------------------------------------------------------------------
         /// <summary>
         ///     勤怠データ表示 </summary>
         ///-------------------------------------------------------------------------
-        private void showKintaiData()
+        private void showKintaiData(double fZan)
         {
             changeStatus = false;
 
@@ -869,7 +871,7 @@ namespace ryowa_Kintai.data
             {
                 // データグリッドビューにデータを表示します
                 GridViewShow(dg, sYY, sMM, Utility.StrtoInt(txtNum.Text));
-                showSumData(dg2, sYY, sMM, Utility.StrtoInt(txtNum.Text));
+                showSumData(dg2, sYY, sMM, Utility.StrtoInt(txtNum.Text), fZan);
             }
             else
             {
@@ -892,8 +894,10 @@ namespace ryowa_Kintai.data
         ///     対象月</param>
         /// <param name="sNum">
         ///     個人コード</param>
+        /// <param name="fZan">
+        ///     各社員の固定残業時間 2018/09/17 </param>
         ///----------------------------------------------------------------------------------
-        private void showSumData(DataGridView g, int sYY, int sMM, int sNum)
+        private void showSumData(DataGridView g, int sYY, int sMM, int sNum, double fZan)
         {
             var ss = dts.T_勤怠
                 .Where(a => a.社員ID == sNum && a.日付.Year == sYY && a.日付.Month == sMM)
@@ -909,6 +913,8 @@ namespace ryowa_Kintai.data
                 });
 
             int iX = 0;
+
+            double tlZan = 0;   // 固定残業時間と比較する累積残業時間 2018/09/17
 
             g.Rows.Clear();
 
@@ -947,10 +953,18 @@ namespace ryowa_Kintai.data
 
                 // 代休取得した時間を差し引く
                 hol -= holD;        
-                hotei -= hoteiD; 
+                hotei -= hoteiD;
 
-                g[cHolWorkTime2, iX].Value = Utility.intToHhMM(hol);    // 休日勤務時間
-                g[cHouteiTm2, iX].Value = Utility.intToHhMM(hotei);     // 法定休日勤務時間
+                // 以下、固定残業時間と比較する   2018/09/17
+                fix2Zan(g, iX, cHolWorkTime2, hol, ref tlZan, fZan);    // 休日勤務時間
+                fix2Zan(g, iX, cHouteiTm2, hotei, ref tlZan, fZan);     // 法定休日勤務時間
+                fix2Zan(g, iX, cHayade2, t.pHayade, ref tlZan, fZan);   // 早出
+                fix2Zan(g, iX, cZan2, t.pZan, ref tlZan, fZan);         // 普通残業
+                fix2Zan(g, iX, cShinya2, t.pSinya, ref tlZan, fZan);    // 深夜残業
+
+                // 2018/09/17 コメント化
+                //g[cHolWorkTime2, iX].Value = Utility.intToHhMM(hol);    // 休日勤務時間
+                //g[cHouteiTm2, iX].Value = Utility.intToHhMM(hotei);     // 法定休日勤務時間
 
                 // 宿泊日数
                 s = dts.T_勤怠.Count(a => a.工事ID == t.pID && a.日付.Year == sYY &&
@@ -959,9 +973,10 @@ namespace ryowa_Kintai.data
 
                 g[cStay2, iX].Value = s.ToString();
 
-                g[cHayade2, iX].Value = Utility.intToHhMM(t.pHayade);   // 早出 2018/07/11
-                g[cZan2, iX].Value = Utility.intToHhMM(t.pZan);         // 普通残業
-                g[cShinya2, iX].Value = Utility.intToHhMM(t.pSinya);    // 深夜残業
+                // 2018/09/17 コメント化
+                //g[cHayade2, iX].Value = Utility.intToHhMM(t.pHayade);   // 早出 2018/07/11
+                //g[cZan2, iX].Value = Utility.intToHhMM(t.pZan);         // 普通残業
+                //g[cShinya2, iX].Value = Utility.intToHhMM(t.pSinya);    // 深夜残業
 
                 g[cKmTuukin2, iX].Value = t.pkm.ToString();
                 g[cKmShiyou2, iX].Value = t.pkmShiyou.ToString();
@@ -1009,6 +1024,58 @@ namespace ryowa_Kintai.data
                 g.CurrentCell = null;
             }
         }
+
+        ///------------------------------------------------------------------
+        /// <summary>
+        ///     固定残業時間を差し引いた時間外勤務を表示 </summary>
+        /// <param name="g">
+        ///     グリッドビューオブジェクト</param>
+        /// <param name="iX">
+        ///     rowインデックス</param>
+        /// <param name="gCol">
+        ///     グリッドビューカラム名</param>
+        /// <param name="sZan">
+        ///     該当項目残業時間</param>
+        /// <param name="tlZan">
+        ///     累積残業時間</param>
+        /// <param name="fZan">
+        ///     該当社員の固定残業時間</param>
+        ///------------------------------------------------------------------
+        private void fix2Zan(DataGridView g, int iX, string gCol, int sZan, ref double tlZan, double fZan)
+        {
+            // 該当項目残業時間がゼロなら表示して戻る
+            if (sZan == global.flgOff)
+            {
+                g[gCol, iX].Value = Utility.intToHhMM(global.flgOff);
+                return;
+            }
+            
+            if (tlZan > fZan)
+            {
+                // 既に累積残業時間が固定残業時間を超過している場合、残業時間を表示して戻る
+                g[gCol, iX].Value = Utility.intToHhMM(sZan);
+            }
+            else
+            {
+                // 累積残業時間加算
+                tlZan += sZan;
+
+                // 固定残業時間と比較する
+                if (tlZan > fZan)
+                {
+                    // 超過した場合、差し引いた時間を表示
+                    g[gCol, iX].Value = Utility.intToHhMM((int)(tlZan - fZan));
+                }
+                else
+                {
+                    // 超過していない場合、ゼロ表示
+                    g[gCol, iX].Value = Utility.intToHhMM(global.flgOff);
+                }
+            }
+        }
+
+
+
 
         ///-------------------------------------------------------------------------
         /// <summary>
@@ -1163,7 +1230,7 @@ namespace ryowa_Kintai.data
 
                         // 出勤簿データ再表示
                         //adp.FillByYYMM(dts.T_勤怠, Utility.StrtoDecimal(txtYear.Text), Utility.StrtoDecimal(txtMonth.Text));
-                        showKintaiData();
+                        showKintaiData(fixZan);
                     }
                 }
             }
@@ -1225,7 +1292,7 @@ namespace ryowa_Kintai.data
                 // 集計欄再表示
                 //showSumData(dg2, Utility.StrtoInt(txtYear.Text) + Properties.Settings.Default.rekiHosei, Utility.StrtoInt(txtMonth.Text), Utility.StrtoInt(txtNum.Text));
                 // 和暦から西暦へ 2018/07/13
-                showSumData(dg2, Utility.StrtoInt(txtYear.Text), Utility.StrtoInt(txtMonth.Text), Utility.StrtoInt(txtNum.Text));
+                showSumData(dg2, Utility.StrtoInt(txtYear.Text), Utility.StrtoInt(txtMonth.Text), Utility.StrtoInt(txtNum.Text), fixZan);
             }
         }
 
@@ -1652,6 +1719,7 @@ namespace ryowa_Kintai.data
 
             txtName.Text = t.氏名;
             txtName.ForeColor = Color.Black;
+            fixZan = t.固定残業時間;     // 固定残業時間取得
 
             if (t.Is退職年月日Null() || !DateTime.TryParse(t.退職年月日, out taDt))
             {
@@ -1669,7 +1737,7 @@ namespace ryowa_Kintai.data
             //linkLabel1.Enabled = true;
 
             // 勤怠データ表示
-            showKintaiData();
+            showKintaiData(fixZan);
         }
 
         ///--------------------------------------------------------

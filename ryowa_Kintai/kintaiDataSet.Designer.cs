@@ -1299,6 +1299,10 @@ namespace ryowa_Kintai {
             
             private global::System.Data.DataColumn column走行起点日付;
             
+            private global::System.Data.DataColumn column現場手当有無;
+            
+            private global::System.Data.DataColumn column固定残業時間;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public M_社員DataTable() {
@@ -1494,6 +1498,22 @@ namespace ryowa_Kintai {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn 現場手当有無Column {
+                get {
+                    return this.column現場手当有無;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn 固定残業時間Column {
+                get {
+                    return this.column固定残業時間;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1549,7 +1569,9 @@ namespace ryowa_Kintai {
                         int 更新ユーザーID, 
                         System.DateTime 更新年月日, 
                         string 退職年月日, 
-                        string 走行起点日付) {
+                        string 走行起点日付, 
+                        int 現場手当有無, 
+                        double 固定残業時間) {
                 M_社員Row rowM_社員Row = ((M_社員Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
@@ -1571,7 +1593,9 @@ namespace ryowa_Kintai {
                         更新ユーザーID,
                         更新年月日,
                         退職年月日,
-                        走行起点日付};
+                        走行起点日付,
+                        現場手当有無,
+                        固定残業時間};
                 rowM_社員Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowM_社員Row);
                 return rowM_社員Row;
@@ -1621,6 +1645,8 @@ namespace ryowa_Kintai {
                 this.column更新年月日 = base.Columns["更新年月日"];
                 this.column退職年月日 = base.Columns["退職年月日"];
                 this.column走行起点日付 = base.Columns["走行起点日付"];
+                this.column現場手当有無 = base.Columns["現場手当有無"];
+                this.column固定残業時間 = base.Columns["固定残業時間"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1666,6 +1692,10 @@ namespace ryowa_Kintai {
                 base.Columns.Add(this.column退職年月日);
                 this.column走行起点日付 = new global::System.Data.DataColumn("走行起点日付", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.column走行起点日付);
+                this.column現場手当有無 = new global::System.Data.DataColumn("現場手当有無", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.column現場手当有無);
+                this.column固定残業時間 = new global::System.Data.DataColumn("固定残業時間", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.column固定残業時間);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AllowDBNull = false;
@@ -3908,6 +3938,38 @@ namespace ryowa_Kintai {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int 現場手当有無 {
+                get {
+                    try {
+                        return ((int)(this[this.tableM_社員.現場手当有無Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'M_社員\' にある列 \'現場手当有無\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableM_社員.現場手当有無Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double 固定残業時間 {
+                get {
+                    try {
+                        return ((double)(this[this.tableM_社員.固定残業時間Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("テーブル \'M_社員\' にある列 \'固定残業時間\' の値は DBNull です。", e);
+                    }
+                }
+                set {
+                    this[this.tableM_社員.固定残業時間Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Is氏名Null() {
                 return this.IsNull(this.tableM_社員.氏名Column);
             }
@@ -4132,6 +4194,30 @@ namespace ryowa_Kintai {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Set走行起点日付Null() {
                 this[this.tableM_社員.走行起点日付Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Is現場手当有無Null() {
+                return this.IsNull(this.tableM_社員.現場手当有無Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Set現場手当有無Null() {
+                this[this.tableM_社員.現場手当有無Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Is固定残業時間Null() {
+                return this.IsNull(this.tableM_社員.固定残業時間Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Set固定残業時間Null() {
+                this[this.tableM_社員.固定残業時間Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7006,10 +7092,12 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("更新年月日", "更新年月日");
             tableMapping.ColumnMappings.Add("退職年月日", "退職年月日");
             tableMapping.ColumnMappings.Add("走行起点日付", "走行起点日付");
+            tableMapping.ColumnMappings.Add("現場手当有無", "現場手当有無");
+            tableMapping.ColumnMappings.Add("固定残業時間", "固定残業時間");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `M_社員` WHERE ((`ID` = ?) AND ((? = 1 AND `氏名` IS NULL) OR (`氏名` = ?)) AND ((? = 1 AND `フリガナ` IS NULL) OR (`フリガナ` = ?)) AND ((? = 1 AND `所属コード` IS NULL) OR (`所属コード` = ?)) AND ((? = 1 AND `所属名` IS NULL) OR (`所属名` = ?)) AND ((? = 1 AND `人件費単価` IS NULL) OR (`人件費単価` = ?)) AND ((? = 1 AND `残業有無` IS NULL) OR (`残業有無` = ?)) AND ((? = 1 AND `通し勤務単価` IS NULL) OR (`通し勤務単価` = ?)) AND ((? = 1 AND `基本給10` IS NULL) OR (`基本給10` = ?)) AND ((? = 1 AND `パスワード` IS NULL) OR (`パスワード` = ?)) AND ((? = 1 AND `アカウント権限` IS NULL) OR (`アカウント権限` = ?)) AND ((? = 1 AND `システムユーザー区分` IS NULL) OR (`システムユーザー区分` = ?)) AND ((? = 1 AND `走行起点` IS NULL) OR (`走行起点` = ?)) AND ((? = 1 AND `走行起点日付` IS NULL) OR (`走行起点日付` = ?)) AND ((? = 1 AND `退職年月日` IS NULL) OR (`退職年月日` = ?)) AND ((? = 1 AND `備考` IS NULL) OR (`備考` = ?)) AND ((? = 1 AND `登録ユーザーID` IS NULL) OR (`登録ユーザーID` = ?)) AND ((? = 1 AND `登録年月日` IS NULL) OR (`登録年月日` = ?)) AND ((? = 1 AND `更新ユーザーID` IS NULL) OR (`更新ユーザーID` = ?)) AND ((? = 1 AND `更新年月日` IS NULL) OR (`更新年月日` = ?)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM `M_社員` WHERE ((`ID` = ?) AND ((? = 1 AND `氏名` IS NULL) OR (`氏名` = ?)) AND ((? = 1 AND `フリガナ` IS NULL) OR (`フリガナ` = ?)) AND ((? = 1 AND `所属コード` IS NULL) OR (`所属コード` = ?)) AND ((? = 1 AND `所属名` IS NULL) OR (`所属名` = ?)) AND ((? = 1 AND `人件費単価` IS NULL) OR (`人件費単価` = ?)) AND ((? = 1 AND `残業有無` IS NULL) OR (`残業有無` = ?)) AND ((? = 1 AND `通し勤務単価` IS NULL) OR (`通し勤務単価` = ?)) AND ((? = 1 AND `基本給10` IS NULL) OR (`基本給10` = ?)) AND ((? = 1 AND `パスワード` IS NULL) OR (`パスワード` = ?)) AND ((? = 1 AND `アカウント権限` IS NULL) OR (`アカウント権限` = ?)) AND ((? = 1 AND `システムユーザー区分` IS NULL) OR (`システムユーザー区分` = ?)) AND ((? = 1 AND `走行起点` IS NULL) OR (`走行起点` = ?)) AND ((? = 1 AND `走行起点日付` IS NULL) OR (`走行起点日付` = ?)) AND ((? = 1 AND `退職年月日` IS NULL) OR (`退職年月日` = ?)) AND ((? = 1 AND `備考` IS NULL) OR (`備考` = ?)) AND ((? = 1 AND `登録ユーザーID` IS NULL) OR (`登録ユーザーID` = ?)) AND ((? = 1 AND `登録年月日` IS NULL) OR (`登録年月日` = ?)) AND ((? = 1 AND `更新ユーザーID` IS NULL) OR (`更新ユーザーID` = ?)) AND ((? = 1 AND `更新年月日` IS NULL) OR (`更新年月日` = ?)) AND ((? = 1 AND `現場手当有無` IS NULL) OR (`現場手当有無` = ?)) AND ((? = 1 AND `固定残業時間` IS NULL) OR (`固定残業時間` = ?)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_氏名", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "氏名", global::System.Data.DataRowVersion.Original, true, null));
@@ -7050,9 +7138,13 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_更新年月日", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_固定残業時間", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_固定残業時間", global::System.Data.OleDb.OleDbType.Double, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.InsertCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO `M_社員` (`ID`, `氏名`, `フリガナ`, `所属コード`, `所属名`, `人件費単価`, `残業有無`, `通し勤務単価`, `基本給10`, `パスワード`, `アカウント権限`, `システムユーザー区分`, `走行起点`, `走行起点日付`, `退職年月日`, `備考`, `登録ユーザーID`, `登録年月日`, `更新ユーザーID`, `更新年月日`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO `M_社員` (`ID`, `氏名`, `フリガナ`, `所属コード`, `所属名`, `人件費単価`, `残業有無`, `通し勤務単価`, `基本給10`, `パスワード`, `アカウント権限`, `システムユーザー区分`, `走行起点`, `走行起点日付`, `退職年月日`, `備考`, `登録ユーザーID`, `登録年月日`, `更新ユーザーID`, `更新年月日`, `現場手当有無`, `固定残業時間`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("氏名", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "氏名", global::System.Data.DataRowVersion.Current, false, null));
@@ -7074,9 +7166,11 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録年月日", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("固定残業時間", global::System.Data.OleDb.OleDbType.Double, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand = new global::System.Data.OleDb.OleDbCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE `M_社員` SET `ID` = ?, `氏名` = ?, `フリガナ` = ?, `所属コード` = ?, `所属名` = ?, `人件費単価` = ?, `残業有無` = ?, `通し勤務単価` = ?, `基本給10` = ?, `パスワード` = ?, `アカウント権限` = ?, `システムユーザー区分` = ?, `走行起点` = ?, `走行起点日付` = ?, `退職年月日` = ?, `備考` = ?, `登録ユーザーID` = ?, `登録年月日` = ?, `更新ユーザーID` = ?, `更新年月日` = ? WHERE ((`ID` = ?) AND ((? = 1 AND `氏名` IS NULL) OR (`氏名` = ?)) AND ((? = 1 AND `フリガナ` IS NULL) OR (`フリガナ` = ?)) AND ((? = 1 AND `所属コード` IS NULL) OR (`所属コード` = ?)) AND ((? = 1 AND `所属名` IS NULL) OR (`所属名` = ?)) AND ((? = 1 AND `人件費単価` IS NULL) OR (`人件費単価` = ?)) AND ((? = 1 AND `残業有無` IS NULL) OR (`残業有無` = ?)) AND ((? = 1 AND `通し勤務単価` IS NULL) OR (`通し勤務単価` = ?)) AND ((? = 1 AND `基本給10` IS NULL) OR (`基本給10` = ?)) AND ((? = 1 AND `パスワード` IS NULL) OR (`パスワード` = ?)) AND ((? = 1 AND `アカウント権限` IS NULL) OR (`アカウント権限` = ?)) AND ((? = 1 AND `システムユーザー区分` IS NULL) OR (`システムユーザー区分` = ?)) AND ((? = 1 AND `走行起点` IS NULL) OR (`走行起点` = ?)) AND ((? = 1 AND `走行起点日付` IS NULL) OR (`走行起点日付` = ?)) AND ((? = 1 AND `退職年月日` IS NULL) OR (`退職年月日` = ?)) AND ((? = 1 AND `備考` IS NULL) OR (`備考` = ?)) AND ((? = 1 AND `登録ユーザーID` IS NULL) OR (`登録ユーザーID` = ?)) AND ((? = 1 AND `登録年月日` IS NULL) OR (`登録年月日` = ?)) AND ((? = 1 AND `更新ユーザーID` IS NULL) OR (`更新ユーザーID` = ?)) AND ((? = 1 AND `更新年月日` IS NULL) OR (`更新年月日` = ?)))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE `M_社員` SET `ID` = ?, `氏名` = ?, `フリガナ` = ?, `所属コード` = ?, `所属名` = ?, `人件費単価` = ?, `残業有無` = ?, `通し勤務単価` = ?, `基本給10` = ?, `パスワード` = ?, `アカウント権限` = ?, `システムユーザー区分` = ?, `走行起点` = ?, `走行起点日付` = ?, `退職年月日` = ?, `備考` = ?, `登録ユーザーID` = ?, `登録年月日` = ?, `更新ユーザーID` = ?, `更新年月日` = ?, `現場手当有無` = ?, `固定残業時間` = ? WHERE ((`ID` = ?) AND ((? = 1 AND `氏名` IS NULL) OR (`氏名` = ?)) AND ((? = 1 AND `フリガナ` IS NULL) OR (`フリガナ` = ?)) AND ((? = 1 AND `所属コード` IS NULL) OR (`所属コード` = ?)) AND ((? = 1 AND `所属名` IS NULL) OR (`所属名` = ?)) AND ((? = 1 AND `人件費単価` IS NULL) OR (`人件費単価` = ?)) AND ((? = 1 AND `残業有無` IS NULL) OR (`残業有無` = ?)) AND ((? = 1 AND `通し勤務単価` IS NULL) OR (`通し勤務単価` = ?)) AND ((? = 1 AND `基本給10` IS NULL) OR (`基本給10` = ?)) AND ((? = 1 AND `パスワード` IS NULL) OR (`パスワード` = ?)) AND ((? = 1 AND `アカウント権限` IS NULL) OR (`アカウント権限` = ?)) AND ((? = 1 AND `システムユーザー区分` IS NULL) OR (`システムユーザー区分` = ?)) AND ((? = 1 AND `走行起点` IS NULL) OR (`走行起点` = ?)) AND ((? = 1 AND `走行起点日付` IS NULL) OR (`走行起点日付` = ?)) AND ((? = 1 AND `退職年月日` IS NULL) OR (`退職年月日` = ?)) AND ((? = 1 AND `備考` IS NULL) OR (`備考` = ?)) AND ((? = 1 AND `登録ユーザーID` IS NULL) OR (`登録ユーザーID` = ?)) AND ((? = 1 AND `登録年月日` IS NULL) OR (`登録年月日` = ?)) AND ((? = 1 AND `更新ユーザーID` IS NULL) OR (`更新ユーザーID` = ?)) AND ((? = 1 AND `更新年月日` IS NULL) OR (`更新年月日` = ?)) AND ((? = 1 AND `現場手当有無` IS NULL) OR (`現場手当有無` = ?)) AND ((? = 1 AND `固定残業時間` IS NULL) OR (`固定残業時間` = ?)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("氏名", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "氏名", global::System.Data.DataRowVersion.Current, false, null));
@@ -7098,6 +7192,8 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録年月日", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Current, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("固定残業時間", global::System.Data.OleDb.OleDbType.Double, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Current, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_氏名", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "氏名", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_氏名", global::System.Data.OleDb.OleDbType.VarWChar, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "氏名", global::System.Data.DataRowVersion.Original, false, null));
@@ -7137,6 +7233,10 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Original, false, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_更新年月日", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Original, true, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_現場手当有無", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "現場手当有無", global::System.Data.DataRowVersion.Original, false, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("IsNull_固定残業時間", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Original, true, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_固定残業時間", global::System.Data.OleDb.OleDbType.Double, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "固定残業時間", global::System.Data.DataRowVersion.Original, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7153,7 +7253,8 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, 氏名, フリガナ, 所属コード, 所属名, 人件費単価, 残業有無, 通し勤務単価, 基本給10, パスワード, アカウント権限, システム" +
-                "ユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日 FROM [M_社員]";
+                "ユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日, 現場手当有無, 固定残業時" +
+                "間 FROM [M_社員]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -7234,7 +7335,9 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<int> Original_登録ユーザーID, 
                     global::System.Nullable<global::System.DateTime> Original_登録年月日, 
                     global::System.Nullable<int> Original_更新ユーザーID, 
-                    global::System.Nullable<global::System.DateTime> Original_更新年月日) {
+                    global::System.Nullable<global::System.DateTime> Original_更新年月日, 
+                    global::System.Nullable<int> Original_現場手当有無, 
+                    global::System.Nullable<double> Original_固定残業時間) {
             if ((Original_ID.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_ID.Value));
             }
@@ -7393,6 +7496,22 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                 this.Adapter.DeleteCommand.Parameters[37].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[38].Value = global::System.DBNull.Value;
             }
+            if ((Original_現場手当有無.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[39].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[40].Value = ((int)(Original_現場手当有無.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[39].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[40].Value = global::System.DBNull.Value;
+            }
+            if ((Original_固定残業時間.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[41].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[42].Value = ((double)(Original_固定残業時間.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[41].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[42].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -7433,7 +7552,9 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<int> 登録ユーザーID, 
                     global::System.Nullable<global::System.DateTime> 登録年月日, 
                     global::System.Nullable<int> 更新ユーザーID, 
-                    global::System.Nullable<global::System.DateTime> 更新年月日) {
+                    global::System.Nullable<global::System.DateTime> 更新年月日, 
+                    global::System.Nullable<int> 現場手当有無, 
+                    global::System.Nullable<double> 固定残業時間) {
             if ((ID.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((int)(ID.Value));
             }
@@ -7554,6 +7675,18 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             else {
                 this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
+            if ((現場手当有無.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[20].Value = ((int)(現場手当有無.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[20].Value = global::System.DBNull.Value;
+            }
+            if ((固定残業時間.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[21].Value = ((double)(固定残業時間.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -7595,6 +7728,8 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<global::System.DateTime> 登録年月日, 
                     global::System.Nullable<int> 更新ユーザーID, 
                     global::System.Nullable<global::System.DateTime> 更新年月日, 
+                    global::System.Nullable<int> 現場手当有無, 
+                    global::System.Nullable<double> 固定残業時間, 
                     global::System.Nullable<int> Original_ID, 
                     string Original_氏名, 
                     string Original_フリガナ, 
@@ -7614,7 +7749,9 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<int> Original_登録ユーザーID, 
                     global::System.Nullable<global::System.DateTime> Original_登録年月日, 
                     global::System.Nullable<int> Original_更新ユーザーID, 
-                    global::System.Nullable<global::System.DateTime> Original_更新年月日) {
+                    global::System.Nullable<global::System.DateTime> Original_更新年月日, 
+                    global::System.Nullable<int> Original_現場手当有無, 
+                    global::System.Nullable<double> Original_固定残業時間) {
             if ((ID.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(ID.Value));
             }
@@ -7735,163 +7872,191 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
-            if ((Original_ID.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(Original_ID.Value));
+            if ((現場手当有無.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(現場手当有無.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            if ((Original_氏名 == null)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+            if ((固定残業時間.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((double)(固定残業時間.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Original_氏名));
+                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
-            if ((Original_フリガナ == null)) {
+            if ((Original_ID.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((int)(Original_ID.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            if ((Original_氏名 == null)) {
                 this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_フリガナ));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Original_氏名));
             }
-            if ((Original_所属コード.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((int)(Original_所属コード.Value));
-            }
-            else {
+            if ((Original_フリガナ == null)) {
                 this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
             }
-            if ((Original_所属名 == null)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(Original_フリガナ));
+            }
+            if ((Original_所属コード.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((int)(Original_所属コード.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(Original_所属名));
-            }
-            if ((Original_人件費単価.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(Original_人件費単価.Value));
-            }
-            else {
+            if ((Original_所属名 == null)) {
                 this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
-            if ((Original_残業有無.HasValue == true)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((string)(Original_所属名));
+            }
+            if ((Original_人件費単価.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[31].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((int)(Original_残業有無.Value));
+                this.Adapter.UpdateCommand.Parameters[32].Value = ((int)(Original_人件費単価.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[31].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[32].Value = global::System.DBNull.Value;
             }
-            if ((Original_通し勤務単価.HasValue == true)) {
+            if ((Original_残業有無.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(Original_通し勤務単価.Value));
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(Original_残業有無.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[33].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
-            if ((Original_基本給10.HasValue == true)) {
+            if ((Original_通し勤務単価.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[35].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((int)(Original_基本給10.Value));
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((int)(Original_通し勤務単価.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[35].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
             }
-            if ((Original_パスワード == null)) {
+            if ((Original_基本給10.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[37].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((int)(Original_基本給10.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[37].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(Original_パスワード));
-            }
-            if ((Original_アカウント権限.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[39].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((int)(Original_アカウント権限.Value));
-            }
-            else {
+            if ((Original_パスワード == null)) {
                 this.Adapter.UpdateCommand.Parameters[39].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[40].Value = global::System.DBNull.Value;
             }
-            if ((Original_システムユーザー区分.HasValue == true)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[39].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[40].Value = ((string)(Original_パスワード));
+            }
+            if ((Original_アカウント権限.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[41].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(Original_システムユーザー区分.Value));
+                this.Adapter.UpdateCommand.Parameters[42].Value = ((int)(Original_アカウント権限.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[41].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[42].Value = global::System.DBNull.Value;
             }
-            if ((Original_走行起点.HasValue == true)) {
+            if ((Original_システムユーザー区分.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[43].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Original_走行起点.Value));
+                this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Original_システムユーザー区分.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[43].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[44].Value = global::System.DBNull.Value;
             }
-            if ((Original_走行起点日付 == null)) {
+            if ((Original_走行起点.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[45].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((int)(Original_走行起点.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[45].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[46].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[45].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((string)(Original_走行起点日付));
-            }
-            if ((Original_退職年月日 == null)) {
+            if ((Original_走行起点日付 == null)) {
                 this.Adapter.UpdateCommand.Parameters[47].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[48].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[47].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((string)(Original_退職年月日));
+                this.Adapter.UpdateCommand.Parameters[48].Value = ((string)(Original_走行起点日付));
             }
-            if ((Original_備考 == null)) {
+            if ((Original_退職年月日 == null)) {
                 this.Adapter.UpdateCommand.Parameters[49].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[50].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[49].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((string)(Original_備考));
+                this.Adapter.UpdateCommand.Parameters[50].Value = ((string)(Original_退職年月日));
             }
-            if ((Original_登録ユーザーID.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((int)(Original_登録ユーザーID.Value));
-            }
-            else {
+            if ((Original_備考 == null)) {
                 this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[52].Value = global::System.DBNull.Value;
             }
-            if ((Original_登録年月日.HasValue == true)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[51].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[52].Value = ((string)(Original_備考));
+            }
+            if ((Original_登録ユーザーID.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((System.DateTime)(Original_登録年月日.Value));
+                this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(Original_登録ユーザーID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[53].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[54].Value = global::System.DBNull.Value;
             }
-            if ((Original_更新ユーザーID.HasValue == true)) {
+            if ((Original_登録年月日.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_更新ユーザーID.Value));
+                this.Adapter.UpdateCommand.Parameters[56].Value = ((System.DateTime)(Original_登録年月日.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[55].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[56].Value = global::System.DBNull.Value;
             }
-            if ((Original_更新年月日.HasValue == true)) {
+            if ((Original_更新ユーザーID.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[58].Value = ((System.DateTime)(Original_更新年月日.Value));
+                this.Adapter.UpdateCommand.Parameters[58].Value = ((int)(Original_更新ユーザーID.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[57].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[58].Value = global::System.DBNull.Value;
+            }
+            if ((Original_更新年月日.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[59].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[60].Value = ((System.DateTime)(Original_更新年月日.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[59].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[60].Value = global::System.DBNull.Value;
+            }
+            if ((Original_現場手当有無.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[62].Value = ((int)(Original_現場手当有無.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[62].Value = global::System.DBNull.Value;
+            }
+            if ((Original_固定残業時間.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[63].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[64].Value = ((double)(Original_固定残業時間.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[63].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[64].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -7933,6 +8098,8 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<global::System.DateTime> 登録年月日, 
                     global::System.Nullable<int> 更新ユーザーID, 
                     global::System.Nullable<global::System.DateTime> 更新年月日, 
+                    global::System.Nullable<int> 現場手当有無, 
+                    global::System.Nullable<double> 固定残業時間, 
                     global::System.Nullable<int> Original_ID, 
                     string Original_氏名, 
                     string Original_フリガナ, 
@@ -7952,8 +8119,10 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
                     global::System.Nullable<int> Original_登録ユーザーID, 
                     global::System.Nullable<global::System.DateTime> Original_登録年月日, 
                     global::System.Nullable<int> Original_更新ユーザーID, 
-                    global::System.Nullable<global::System.DateTime> Original_更新年月日) {
-            return this.Update(Original_ID, 氏名, フリガナ, 所属コード, 所属名, 人件費単価, 残業有無, 通し勤務単価, 基本給10, パスワード, アカウント権限, システムユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日, Original_ID, Original_氏名, Original_フリガナ, Original_所属コード, Original_所属名, Original_人件費単価, Original_残業有無, Original_通し勤務単価, Original_基本給10, Original_パスワード, Original_アカウント権限, Original_システムユーザー区分, Original_走行起点, Original_走行起点日付, Original_退職年月日, Original_備考, Original_登録ユーザーID, Original_登録年月日, Original_更新ユーザーID, Original_更新年月日);
+                    global::System.Nullable<global::System.DateTime> Original_更新年月日, 
+                    global::System.Nullable<int> Original_現場手当有無, 
+                    global::System.Nullable<double> Original_固定残業時間) {
+            return this.Update(Original_ID, 氏名, フリガナ, 所属コード, 所属名, 人件費単価, 残業有無, 通し勤務単価, 基本給10, パスワード, アカウント権限, システムユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日, 現場手当有無, 固定残業時間, Original_ID, Original_氏名, Original_フリガナ, Original_所属コード, Original_所属名, Original_人件費単価, Original_残業有無, Original_通し勤務単価, Original_基本給10, Original_パスワード, Original_アカウント権限, Original_システムユーザー区分, Original_走行起点, Original_走行起点日付, Original_退職年月日, Original_備考, Original_登録ユーザーID, Original_登録年月日, Original_更新ユーザーID, Original_更新年月日, Original_現場手当有無, Original_固定残業時間);
         }
     }
     
