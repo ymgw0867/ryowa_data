@@ -915,6 +915,7 @@ namespace ryowa_Kintai.data
             int iX = 0;
 
             double tlZan = 0;   // 固定残業時間と比較する累積残業時間 2018/09/17
+            fZan *= 60;         // 固定残業時間を分単位に変換 2018/09/20
 
             g.Rows.Clear();
 
@@ -946,7 +947,7 @@ namespace ryowa_Kintai.data
                 int hotei = 0;
                 Utility.getHolTime(dts.T_勤怠, out hol, out hotei, t.pID, sYY, sMM, sNum);
 
-                // 工事部署ごとの休日代休時間・法定休日時間取得を求める
+                // 工事部署ごとの代休時間を求める
                 int holD = 0;
                 int hoteiD = 0;
                 Utility.getdaikyuTime(dts, out holD, out hoteiD, sYY, sMM, sNum, t.pID);
