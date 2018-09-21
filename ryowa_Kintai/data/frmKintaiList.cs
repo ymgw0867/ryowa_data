@@ -956,17 +956,23 @@ namespace ryowa_Kintai.data
                 hol -= holD;        
                 hotei -= hoteiD;
 
-                // 以下、固定残業時間と比較する   2018/09/17
+                /* ------------------------------------------------------------------
+                 * 以下、固定残業時間を超過した時間を残業時間を表示する  
+                 * 2018/09/17
+                 * ------------------------------------------------------------------
+                 */
                 fix2Zan(g, iX, cHolWorkTime2, hol, ref tlZan, fZan);    // 休日勤務時間
                 fix2Zan(g, iX, cHouteiTm2, hotei, ref tlZan, fZan);     // 法定休日勤務時間
                 fix2Zan(g, iX, cHayade2, t.pHayade, ref tlZan, fZan);   // 早出
                 fix2Zan(g, iX, cZan2, t.pZan, ref tlZan, fZan);         // 普通残業
                 fix2Zan(g, iX, cShinya2, t.pSinya, ref tlZan, fZan);    // 深夜残業
+                
+                //--------------------------------------------------------------------
 
                 // 2018/09/17 コメント化
                 //g[cHolWorkTime2, iX].Value = Utility.intToHhMM(hol);    // 休日勤務時間
                 //g[cHouteiTm2, iX].Value = Utility.intToHhMM(hotei);     // 法定休日勤務時間
-
+                
                 // 宿泊日数
                 s = dts.T_勤怠.Count(a => a.工事ID == t.pID && a.日付.Year == sYY &&
                             a.日付.Month == sMM && a.社員ID == sNum &&
@@ -1577,7 +1583,7 @@ namespace ryowa_Kintai.data
                             }
                             else
                             {
-                                oxlsPrintSheet.Cells[S_GYO2 + i, 9] = string.Empty;
+                                oxlsPrintSheet.Cells[S_GYO2 + i, 9] = Utility.intToHhMM(global.flgOff);
                             }
                             //oxlsPrintSheet.Cells[S_GYO2 + i, 9] = Utility.nulltoStr(dg2[cZan2, i].Value);   // 残業時間
 

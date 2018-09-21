@@ -94,10 +94,12 @@ namespace ryowa_DATA.data
             // 社員ごとに読み込む
             foreach (var t in s)
             {
-                int hol = 0;        // 休日勤務時間
-                int houtei = 0;     // 法定休日勤務時間
+                //int hol = 0;        // 休日勤務時間
+                //int houtei = 0;     // 法定休日勤務時間
+
                 int holD = 0;       // 休日代休時間
                 int houteiD = 0;    // 法定休日代休時間
+
                 int shaink10 = 0;
                 int shainTooshi = 0;
                 string sName = string.Empty;
@@ -108,6 +110,7 @@ namespace ryowa_DATA.data
                 int sShokushu = 0;
                 int sZanStatus = 0; // 残業有無
                 int sGenbaKbn = 0;  // 現場手当有無 2018/09/11
+                double fZan = 0;    // 固定残業時間 2018/09/21
 
                 // 社員情報を取得
                 if (dts.M_社員.Any(a => a.ID == t.sID))
@@ -118,6 +121,7 @@ namespace ryowa_DATA.data
                     shainTooshi = ss.通し勤務単価;
                     sZanStatus = ss.残業有無;
                     sGenbaKbn = ss.現場手当有無;  // 2018/09/11
+                    fZan = ss.固定残業時間;       // 2018/09/21
                 }
                 else
                 {
@@ -126,6 +130,7 @@ namespace ryowa_DATA.data
                     shaink10 = 0;
                     shainTooshi = 0;
                     sGenbaKbn = 0;  // 2018/09/11
+                    fZan = 0;       // 2018/09/21
                 }
                 
                 wd[iX] = new workData();    // 配列インスタンスの生成
@@ -136,20 +141,106 @@ namespace ryowa_DATA.data
                 // 残業有無ステータス
                 if (sZanStatus == global.flgOn)
                 {
+                    // 工事毎の残業時間 2018/09/21
+                    var ss = dts.T_勤怠
+                        .Where(a => a.社員ID == t.sID && a.日付.Year == _sYY && a.日付.Month == _sMM)
+                        .GroupBy(a => a.工事ID)
+                        .Select(gr => new
+                        {
+                            pID = gr.Key,
+                            pHayade = gr.Sum(a => a.早出残業),
+                            pZan = gr.Sum(a => a.普通残業),
+                            pSinya = gr.Sum(a => a.深夜残業)
+                        });
+                    
+                    double tlZan = 0;   // 固定残業時間と比較する累積残業時間 2018/09/17
+                    fZan *= 60;         // 固定残業時間を分単位に変換 2018/09/20
+
+                    // 残業内訳クラス配列
+                    clsZangyoArray[] zArray = new clsZangyoArray[ss.Count()];
+
+                    int ij = 0;
+
+                    // 以下、2018/09/21
+                    foreach (var kk in ss)
+                    {
+                        // 残業内訳クラス配列初期化
+                        zArray[ij] = new clsZangyoArray();
+                        zArray[ij].sHol = 0;
+                        zArray[ij].sHoutei = 0;
+                        zArray[ij].sZangyo = 0;
+                        zArray[ij].sShinya = 0;
+
+                        // 工事部署ごとの休日勤務時間・法定休日勤務時間を求める
+                        int _hol = 0;
+                        int _houtei = 0;
+                        Utility.getHolTime(dts.T_勤怠, out _hol, out _houtei, kk.pID, _sYY, _sMM, t.sID);
+
+                        // 工事部署ごとの代休時間を求める
+                        int _holD = 0;
+                        int _houteiD = 0;
+                        Utility.getdaikyuTime(dts, out _holD, out _houteiD, _sYY, _sMM, t.sID, kk.pID);
+                        
+                        // 代休取得した時間を差し引く
+                        _hol -= _holD;
+                        _houtei -= _houteiD;
+
+                        /* ------------------------------------------------------------------
+                         * 以下、固定残業時間を超過した時間を残業時間を計算する
+                         * ------------------------------------------------------------------
+                         */
+                        zArray[ij].sHol = (int)fix2Zan(_hol, ref tlZan, fZan);    // 休日勤務時間
+                        zArray[ij].sHoutei = (int)fix2Zan(_houtei, ref tlZan, fZan);     // 法定休日勤務時間
+                        zArray[ij].sZangyo = (int)fix2Zan(kk.pHayade + kk.pZan, ref tlZan, fZan);   // 早出 + 普通残業
+                        zArray[ij].sShinya = (int)fix2Zan(kk.pSinya, ref tlZan, fZan);    // 深夜残業
+
+                        //--------------------------------------------------------------------
+
+                        // 休日代休時間
+                        holD += _holD;
+
+                        // 法定休日代休時間
+                        houteiD += _houteiD;
+
+                        ij++;
+                    }
+
+
+                    //// 残業支給対象 2018/09/21 コメント化
+                    //wd[iX].zanTM = t.sZan;  // 普通残業（早出残業含む 2018/07/20）
+                    //wd[iX].siTM = t.sSinya; // 深夜残業
+
                     // 残業支給対象
-                    wd[iX].zanTM = t.sZan;  // 普通残業（早出残業含む 2018/07/20）
-                    wd[iX].siTM = t.sSinya; // 深夜残業
+                    int tHol = 0;
+                    int tHoutei = 0;
+                    int tZan = 0;
+                    int tShinya = 0;
 
-                    // 月間の休日勤務時間、法定休日勤務時間取得
-                    Utility.getHolTime(dts.T_勤怠, out hol, out houtei, _sYY, _sMM, t.sID);
+                    for (int i = 0; i < zArray.Length; i++)
+                    {
+                        tHol += zArray[i].sHol;
+                        tHoutei += zArray[i].sHoutei;
+                        tZan += zArray[i].sZangyo;
+                        tShinya += zArray[i].sShinya;
+                    }
 
-                    // 休日代休時間、法定休日代休時間取得
-                    getdaikyuTime(out holD, out houteiD, _sYY, _sMM, t.sID);
-                    hol -= holD;       // 休日勤務時間より休日代休時間を差し引く
-                    houtei -= houteiD; // 法定休日勤務時間より法定休日代休時間を差し引く
+                    wd[iX].zanTM = tZan;    // 普通残業（早出残業含む 2018/09/21）
+                    wd[iX].siTM = tShinya;  // 深夜残業 2018/09/21
 
-                    wd[iX].holTM = hol;                 // 休日勤務時間
-                    wd[iX].houteiTM = houtei;           // 法定休日勤務時間
+                    //// 月間の休日勤務時間、法定休日勤務時間取得 2018/09/21 コメント化
+                    //Utility.getHolTime(dts.T_勤怠, out hol, out houtei, _sYY, _sMM, t.sID);
+
+                    //// 休日代休時間、法定休日代休時間取得 2018/09/21 コメント化
+                    //getdaikyuTime(out holD, out houteiD, _sYY, _sMM, t.sID);
+                    //hol -= holD;       // 休日勤務時間より休日代休時間を差し引く
+                    //houtei -= houteiD; // 法定休日勤務時間より法定休日代休時間を差し引く
+
+                    //wd[iX].holTM = hol;                 // 休日勤務時間 2018/09/21 コメント化
+                    //wd[iX].houteiTM = houtei;           // 法定休日勤務時間 2018/09/21 コメント化
+
+                    wd[iX].holTM = tHol;         // 休日勤務時間 2018/09/21
+                    wd[iX].houteiTM = tHoutei;   // 法定休日勤務時間 2018/09/21
+
                     wd[iX].holDaikyuTM = holD;          // 休日代休時間
                     wd[iX].houteiDaikyuTM = houteiD;    // 法定休日勤務時間
                 }
@@ -206,6 +297,54 @@ namespace ryowa_DATA.data
                 wd[iX].shokumuNum = sShokushu;  // 職務手当数
 
                 iX++;
+            }
+        }
+
+        ///------------------------------------------------------------------
+        /// <summary>
+        ///     固定残業時間を差し引いた時間外勤務を計算 </summary>
+        /// <param name="g">
+        ///     グリッドビューオブジェクト</param>
+        /// <param name="iX">
+        ///     rowインデックス</param>
+        /// <param name="gCol">
+        ///     グリッドビューカラム名</param>
+        /// <param name="sZan">
+        ///     該当項目残業時間</param>
+        /// <param name="tlZan">
+        ///     累積残業時間</param>
+        /// <param name="fZan">
+        ///     該当社員の固定残業時間</param>
+        ///------------------------------------------------------------------
+        private double fix2Zan(int sZan, ref double tlZan, double fZan)
+        {
+            // 該当項目残業時間がゼロならゼロを返す
+            if (sZan == global.flgOff)
+            {
+                return (double)global.flgOff;
+            }
+
+            if (tlZan > fZan)
+            {
+                // 既に累積残業時間が固定残業時間を超過している場合、残業時間を返す
+                return sZan;
+            }
+            else
+            {
+                // 累積残業時間加算
+                tlZan += sZan;
+
+                // 固定残業時間と比較する
+                if (tlZan > fZan)
+                {
+                    // 超過した場合、差し引いた時間を返す
+                    return (tlZan - fZan);
+                }
+                else
+                {
+                    // 超過していない場合、ゼロを返す
+                    return (double)global.flgOff;
+                }
             }
         }
 

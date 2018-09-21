@@ -89,6 +89,7 @@
     <Compile Include="data\clsMailReceive.cs" />
     <Compile Include="data\clsMounthDays.cs" />
     <Compile Include="data\clsSumData.cs" />
+    <Compile Include="data\clsZangyoArray.cs" />
     <Compile Include="data\frmKintaiCheckList.cs">
       <SubType>Form</SubType>
     </Compile>
