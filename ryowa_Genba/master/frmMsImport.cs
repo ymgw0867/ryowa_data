@@ -395,5 +395,13 @@ namespace ryowa_Genba.master
         {
             lblFname.Text = string.Empty;
         }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            frmKojiIDCnv frm = new master.frmKojiIDCnv();
+            frm.ShowDialog();
+            this.Show();
+        }
     }
 }

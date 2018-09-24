@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ryowa_Genba.common;
+using System.Data.OleDb;
 
 namespace ryowa_Genba
 {
@@ -69,6 +70,20 @@ namespace ryowa_Genba
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            // M_社員に「現場手当有無」フィールド、「固定残業時間」フィールド追加 2018/09/24
+            dbCreateAlter();
+            
+            // M_社員 : 2018/09/24
+            //bool upStatus = false;
+            genbaDataSetTableAdapters.M_社員TableAdapter mAdp = new genbaDataSetTableAdapters.M_社員TableAdapter();
+
+            // M_社員 現場手当有無 null → 0 : 2018/09/24
+            mAdp.UpdateQueryGenbaNull();
+
+            // M_社員 固定残業時間 null → 0 : 2018/09/24
+            mAdp.UpdateQueryKoteizanNull();
+
             // メール情報未登録のとき、出勤簿入力を不可とする
             if (!hpStatus())
             {
@@ -86,6 +101,56 @@ namespace ryowa_Genba
             else
             {
                 linkLabel7.Enabled = true;
+            }
+        }
+
+        ///--------------------------------------------------------
+        /// <summary>
+        ///     M_社員 「現場手当有無」「固定残業時間」フィールド追加 : 2018/09/03
+        ///     T_勤怠テーブル 早出残業フィールドの追加 </summary>
+        ///                               2016/09/13
+        ///--------------------------------------------------------
+        private void dbCreateAlter()
+        {
+            OleDbCommand sCom = new OleDbCommand();
+            mdbControl mdb = new mdbControl();
+            mdb.dbConnect(sCom);
+
+            StringBuilder sb = new StringBuilder();
+
+            try
+            {
+                // M_社員 「現場手当有無」「固定残業時間」フィールド追加
+                sb.Clear();
+                sb.Append("ALTER TABLE M_社員 ");
+                sb.Append("ADD COLUMN 現場手当有無 int");
+
+                sCom.CommandText = sb.ToString();
+                sCom.ExecuteNonQuery();
+
+                sb.Clear();
+                sb.Append("ALTER TABLE M_社員 ");
+                sb.Append("ADD COLUMN 固定残業時間 double");
+
+                sCom.CommandText = sb.ToString();
+                sCom.ExecuteNonQuery();
+
+                // データベース接続解除
+                if (sCom.Connection.State == ConnectionState.Open)
+                {
+                    sCom.Connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                //MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                if (sCom.Connection.State == ConnectionState.Open)
+                {
+                    sCom.Connection.Close();
+                }
             }
         }
 

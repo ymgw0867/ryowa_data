@@ -48,7 +48,7 @@
             this.label6.BackColor = System.Drawing.Color.SteelBlue;
             this.label6.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(20, 53);
+            this.label6.Location = new System.Drawing.Point(20, 49);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(133, 27);
             this.label6.TabIndex = 51;
@@ -59,7 +59,7 @@
             // 
             this.txtName.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtName.ImeMode = System.Windows.Forms.ImeMode.Hiragana;
-            this.txtName.Location = new System.Drawing.Point(155, 53);
+            this.txtName.Location = new System.Drawing.Point(155, 49);
             this.txtName.MaxLength = 100;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(255, 27);
@@ -82,7 +82,7 @@
             this.label10.BackColor = System.Drawing.Color.SteelBlue;
             this.label10.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(20, 86);
+            this.label10.Location = new System.Drawing.Point(20, 78);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(133, 27);
             this.label10.TabIndex = 59;
@@ -104,7 +104,7 @@
             // 
             this.txtPass.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtPass.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtPass.Location = new System.Drawing.Point(155, 86);
+            this.txtPass.Location = new System.Drawing.Point(155, 78);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(255, 27);
@@ -116,7 +116,7 @@
             this.linkLabel4.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel4.Image")));
             this.linkLabel4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel4.Location = new System.Drawing.Point(239, 196);
+            this.linkLabel4.Location = new System.Drawing.Point(239, 182);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(92, 24);
             this.linkLabel4.TabIndex = 5;
@@ -131,7 +131,7 @@
             this.linkLabel1.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel1.Image")));
             this.linkLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(348, 196);
+            this.linkLabel1.Location = new System.Drawing.Point(348, 182);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(62, 24);
             this.linkLabel1.TabIndex = 6;
@@ -143,7 +143,7 @@
             // dtKiten
             // 
             this.dtKiten.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.dtKiten.Location = new System.Drawing.Point(155, 119);
+            this.dtKiten.Location = new System.Drawing.Point(155, 107);
             this.dtKiten.Name = "dtKiten";
             this.dtKiten.ShowCheckBox = true;
             this.dtKiten.Size = new System.Drawing.Size(255, 27);
@@ -153,7 +153,7 @@
             // 
             this.txtKm.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.txtKm.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtKm.Location = new System.Drawing.Point(155, 152);
+            this.txtKm.Location = new System.Drawing.Point(155, 136);
             this.txtKm.Name = "txtKm";
             this.txtKm.Size = new System.Drawing.Size(255, 27);
             this.txtKm.TabIndex = 4;
@@ -163,7 +163,7 @@
             this.label15.BackColor = System.Drawing.Color.SteelBlue;
             this.label15.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(20, 152);
+            this.label15.Location = new System.Drawing.Point(20, 136);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(133, 27);
             this.label15.TabIndex = 78;
@@ -175,7 +175,7 @@
             this.label14.BackColor = System.Drawing.Color.SteelBlue;
             this.label14.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(20, 119);
+            this.label14.Location = new System.Drawing.Point(20, 107);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(133, 27);
             this.label14.TabIndex = 77;
@@ -186,7 +186,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 232);
+            this.ClientSize = new System.Drawing.Size(431, 214);
             this.Controls.Add(this.dtKiten);
             this.Controls.Add(this.txtKm);
             this.Controls.Add(this.label15);

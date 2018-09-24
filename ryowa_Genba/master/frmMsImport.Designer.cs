@@ -32,6 +32,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.lblFname = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
@@ -77,26 +78,41 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.radioButton1);
             this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Location = new System.Drawing.Point(26, 35);
+            this.panel1.Location = new System.Drawing.Point(25, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(458, 102);
+            this.panel1.Size = new System.Drawing.Size(458, 100);
             this.panel1.TabIndex = 0;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.linkLabel2.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel2.Image")));
+            this.linkLabel2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkLabel2.Location = new System.Drawing.Point(21, 194);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(173, 38);
+            this.linkLabel2.TabIndex = 2;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "工事ＩＤ一括変更";
+            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // lblFname
             // 
             this.lblFname.BackColor = System.Drawing.SystemColors.Window;
             this.lblFname.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblFname.Font = new System.Drawing.Font("Meiryo UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.lblFname.Location = new System.Drawing.Point(26, 150);
+            this.lblFname.Location = new System.Drawing.Point(25, 144);
             this.lblFname.Name = "lblFname";
             this.lblFname.Size = new System.Drawing.Size(385, 30);
-            this.lblFname.TabIndex = 16;
+            this.lblFname.TabIndex = 5;
             this.lblFname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(419, 151);
+            this.button1.Location = new System.Drawing.Point(418, 145);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 28);
             this.button1.TabIndex = 1;
@@ -110,7 +126,7 @@
             this.linkLabel4.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel4.Image")));
             this.linkLabel4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel4.Location = new System.Drawing.Point(315, 200);
+            this.linkLabel4.Location = new System.Drawing.Point(314, 201);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(92, 24);
             this.linkLabel4.TabIndex = 2;
@@ -125,7 +141,7 @@
             this.linkLabel1.Image = ((System.Drawing.Image)(resources.GetObject("linkLabel1.Image")));
             this.linkLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(422, 200);
+            this.linkLabel1.Location = new System.Drawing.Point(421, 201);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(62, 24);
             this.linkLabel1.TabIndex = 3;
@@ -140,7 +156,7 @@
             this.label3.ForeColor = System.Drawing.Color.Blue;
             this.label3.Image = ((System.Drawing.Image)(resources.GetObject("label3.Image")));
             this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label3.Location = new System.Drawing.Point(38, 22);
+            this.label3.Location = new System.Drawing.Point(37, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(131, 28);
             this.label3.TabIndex = 21;
@@ -151,7 +167,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 237);
+            this.ClientSize = new System.Drawing.Size(508, 234);
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.linkLabel4);
             this.Controls.Add(this.linkLabel1);
@@ -180,5 +197,6 @@
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel linkLabel2;
     }
 }

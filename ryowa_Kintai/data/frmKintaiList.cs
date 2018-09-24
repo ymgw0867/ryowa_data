@@ -1298,7 +1298,9 @@ namespace ryowa_Kintai.data
 
                 // 集計欄再表示
                 //showSumData(dg2, Utility.StrtoInt(txtYear.Text) + Properties.Settings.Default.rekiHosei, Utility.StrtoInt(txtMonth.Text), Utility.StrtoInt(txtNum.Text));
-                // 和暦から西暦へ 2018/07/13
+                
+                /* 和暦から西暦へ 2018/07/13
+                 * 固定残業時間引数を追加 2018/09/13 */
                 showSumData(dg2, Utility.StrtoInt(txtYear.Text), Utility.StrtoInt(txtMonth.Text), Utility.StrtoInt(txtNum.Text), fixZan);
             }
         }

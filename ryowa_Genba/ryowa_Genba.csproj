@@ -81,6 +81,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>genbaDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="master\frmKojiIDCnv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="master\frmKojiIDCnv.designer.cs">
+      <DependentUpon>frmKojiIDCnv.cs</DependentUpon>
+    </Compile>
     <Compile Include="master\frmMsImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="master\frmKojiIDCnv.resx">
+      <DependentUpon>frmKojiIDCnv.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="master\frmMsImport.resx">
       <DependentUpon>frmMsImport.cs</DependentUpon>
