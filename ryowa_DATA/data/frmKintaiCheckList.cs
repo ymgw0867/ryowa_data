@@ -16,7 +16,6 @@ namespace ryowa_DATA.data
         public frmKintaiCheckList()
         {
             InitializeComponent();
-
         }
 
         #region カラム定義

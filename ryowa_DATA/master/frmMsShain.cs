@@ -530,6 +530,7 @@ namespace ryowa_DATA.master
             else
             {
                 dtKiten.Value = DateTime.Parse(s.走行起点日付);
+                dtKiten.Checked = true;     // 2018/09/25
             }
 
             if (s.Is退職年月日Null() || s.退職年月日 == string.Empty)

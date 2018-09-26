@@ -126,6 +126,12 @@ namespace ryowa_DATA.data
 
                     iX++;
                 }
+
+                // 端数処理：月既定日数との差異を最後の日数に含めて合計を合わせる 2018/09/26
+                if (hDaysTl != Properties.Settings.Default.tempdays)
+                {
+                    hd[iX - 1].sDays += Properties.Settings.Default.tempdays - hDaysTl;
+                }
             }
         }
 

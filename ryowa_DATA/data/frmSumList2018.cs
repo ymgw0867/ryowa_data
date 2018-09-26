@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ryowa_DATA.common;
 using Excel = Microsoft.Office.Interop.Excel;
 using ClosedXML.Excel;
+using LINQtoCSV;
 
 namespace ryowa_DATA.data
 {
@@ -33,6 +34,12 @@ namespace ryowa_DATA.data
 
         // 配置日数配列クラス
         clsMounthDays md;
+
+        // 工事毎人件費集計表データファイル
+        const string K_DRAFT_DATA = @"C:\RYOWA_DATA\xlsOut\koujiShainDraft.csv";
+
+        const string linkLabelKouji = "工事別社員別集計表示";
+        const string linkLabelShain = "社員別工事別集計表示";
 
         private void frmSumList_Load(object sender, EventArgs e)
         {
@@ -215,6 +222,9 @@ namespace ryowa_DATA.data
             radioButton1.Checked = true;
 
             //label6.Text = Properties.Settings.Default.gengou; // 和暦から西暦へ 2018/07/13
+
+            linkLabel1.Text = linkLabelKouji;   // ラベルを工事にする 2018/09/26
+            linkLabel1.Visible = false;         // 工事別社員別表示ラベル 2018/09/26
         }
 
         ///--------------------------------------------------------------       
@@ -257,7 +267,8 @@ namespace ryowa_DATA.data
                         yakan = k.Sum(a => a.夜間手当),
                         shokumu = k.Sum(a => a.職務手当)
                     })
-                    .OrderByDescending(a => a.cnt)
+                    //.OrderByDescending(a => a.cnt) 2018/09/25 コメント化
+                    .OrderBy(a => a.kID)    // 工事IDで並び替え 2018/09/25
                 })
                 .OrderBy(a => a.sID);
 
@@ -267,7 +278,8 @@ namespace ryowa_DATA.data
             int jkh = 0;
             int svSID = 0;
             bool colorStatus = true;
-            int genbaKbn = 0;  // 2018/09/11 社員マスター現場手当有無
+            int genbaKbn = 0;   // 2018/09/11 社員マスター現場手当有無
+            double fixZan = 0;  // 2018/09/25 固定残業時間
 
             // 集計データ読込
             foreach (var t in s)
@@ -278,6 +290,19 @@ namespace ryowa_DATA.data
                     dg.Rows.Add();
                     cs.sArray[1].sID = svSID.ToString();
                     cs.sArray[1].sName = "集　　計";
+
+                    // 端数処理：人件費単価と工事別人件費計の差異を加算 2018/09/26
+                    if (cs.sArray[1].sJinkanhi != jkh)
+                    {
+                        int sagaku = jkh - cs.sArray[1].sJinkanhi;
+                        cs.sArray[0].sJinkanhi += sagaku;
+                        cs.sArray[1].sJinkanhi += sagaku;
+                        cs.sArray[2].sJinkanhi += sagaku;
+                        
+                        // グリッドへ再表示
+                        gridRowAddData(cs.sArray, dg, iX - 1, 0, colorStatus);
+                    }
+
                     gridRowAddData(cs.sArray, dg, iX, 1, colorStatus);
                     iX++;
 
@@ -303,14 +328,19 @@ namespace ryowa_DATA.data
                     var m = dts.M_社員.Single(a => a.ID == t.sID);
                     cs.sArray[0].sName = m.氏名;
                     jkh = m.人件費単価;
-                    genbaKbn = m.現場手当有無;   // 2018/09/11
+                    genbaKbn = m.現場手当有無;    // 2018/09/11
+                    fixZan = m.固定残業時間;      // 2018/09/25
                 }
                 else
                 {
                     cs.sArray[0].sName = "";
                     jkh = 0;
-                    genbaKbn = 0;  // 2018/09/11
+                    genbaKbn = 0;   // 2018/09/11
+                    fixZan = 0;     // 2018/09/25
                 }
+
+                double tlZan = 0;   // 固定残業時間と比較する累積残業時間 2018/09/25
+                fixZan *= 60;       // 固定残業時間を分単位に変換 2018/09/25
 
                 svSID = t.sID;
 
@@ -319,7 +349,7 @@ namespace ryowa_DATA.data
                 {
                     g.Rows.Add();
 
-                    cs.sArray[0].pID = j.kID.ToString();   // 工事ID
+                    cs.sArray[0].pID = j.kID.ToString().PadLeft(6, '0');    // 工事ID
 
                     int gKbn = 0;
                     int kKbn = 0;
@@ -341,7 +371,9 @@ namespace ryowa_DATA.data
                     cs.sArray[0].sHaichiDays = md.getHaichidays(t.sID, j.kID);
 
                     // 人件費
-                    cs.sArray[0].sJinkanhi = (int)(jkh / Properties.Settings.Default.tempdays * cs.sArray[0].sHaichiDays);
+                    //cs.sArray[0].sJinkanhi = (int)(jkh / Properties.Settings.Default.tempdays * cs.sArray[0].sHaichiDays);
+                    // 2018/09/26 小数点１位四捨五入
+                    cs.sArray[0].sJinkanhi = (int)(jkh / Properties.Settings.Default.tempdays * cs.sArray[0].sHaichiDays + (decimal)0.5);
 
                     // 現場日数
                     /* 工事コードが「現場」に社員マスターの「現場手当有無」が
@@ -381,11 +413,26 @@ namespace ryowa_DATA.data
                     hol -= holD;
                     hotei -= hoteiD;
 
+
+
+                    /* ------------------------------------------------------------------
+                     * 
+                     * 以下、固定残業時間を超過した時間を残業時間を表示する 2018/09/25
+                     * 
+                     * ------------------------------------------------------------------
+                     */
+                    cs.sArray[0].sHolTM = (int)fix2Zan(hol, ref tlZan, fixZan);         // 休日勤務時間
+                    cs.sArray[0].sHouteiTM = (int)fix2Zan(hotei, ref tlZan, fixZan);    // 法定休日勤務時間
+                    cs.sArray[0].sZanTM = (int)fix2Zan(j.zanTM, ref tlZan, fixZan);     // 普通残業
+                    cs.sArray[0].sSiTM = (int)fix2Zan(j.siTM, ref tlZan, fixZan);       // 深夜残業
+
+                    
                     // 明細行値格納
-                    cs.sArray[0].sHolTM = hol;              // 休日勤務時間
-                    cs.sArray[0].sHouteiTM = hotei;         // 法定休日勤務時間
-                    cs.sArray[0].sZanTM = j.zanTM;          // 普通残業時間
-                    cs.sArray[0].sSiTM = j.siTM;            // 深夜残業時間
+                    //cs.sArray[0].sHolTM = hol;              // 休日勤務時間 2018/09/25 コメント化
+                    //cs.sArray[0].sHouteiTM = hotei;         // 法定休日勤務時間 2018/09/25 コメント化
+                    //cs.sArray[0].sZanTM = j.zanTM;          // 普通残業時間 2018/09/25 コメント化
+                    //cs.sArray[0].sSiTM = j.siTM;            // 深夜残業時間 2018/09/25 コメント化
+
                     cs.sArray[0].sJyosetsu = j.jyosetsu;    // 除雪手当
                     cs.sArray[0].sTokushu = j.tokushu;      // 特殊勤務
                     cs.sArray[0].sTooshi = j.tooshi;        // 通し勤務
@@ -422,6 +469,19 @@ namespace ryowa_DATA.data
             dg.Rows.Add();
             cs.sArray[1].sID = svSID.ToString();
             cs.sArray[1].sName = "集　　計";
+
+            // 端数処理：人件費単価と工事別人件費計の差異を加算 2018/09/26
+            if (cs.sArray[1].sJinkanhi != jkh)
+            {
+                int sagaku = jkh - cs.sArray[1].sJinkanhi;
+                cs.sArray[0].sJinkanhi += sagaku;
+                cs.sArray[1].sJinkanhi += sagaku;
+                cs.sArray[2].sJinkanhi += sagaku;
+
+                // グリッドへ再表示
+                gridRowAddData(cs.sArray, dg, iX - 1, 0, colorStatus);
+            }
+
             gridRowAddData(cs.sArray, dg, iX, 1, colorStatus);
             iX++;
 
@@ -447,7 +507,51 @@ namespace ryowa_DATA.data
             
             this.Cursor = Cursors.Default;
         }
+        
 
+        ///------------------------------------------------------------------
+        /// <summary>
+        ///     固定残業時間を差し引いた時間外勤務を計算 </summary>
+        /// <param name="sZan">
+        ///     該当項目残業時間</param>
+        /// <param name="tlZan">
+        ///     累積残業時間</param>
+        /// <param name="fZan">
+        ///     該当社員の固定残業時間</param>
+        ///------------------------------------------------------------------
+        private double fix2Zan(int sZan, ref double tlZan, double fZan)
+        {
+            // 該当項目残業時間がゼロならゼロを返す
+            if (sZan == global.flgOff)
+            {
+                return (double)global.flgOff;
+            }
+
+            if (tlZan > fZan)
+            {
+                // 既に累積残業時間が固定残業時間を超過している場合、残業時間を返す
+                return sZan;
+            }
+            else
+            {
+                // 累積残業時間加算
+                tlZan += sZan;
+
+                // 固定残業時間と比較する
+                if (tlZan > fZan)
+                {
+                    // 超過した場合、差し引いた時間を返す
+                    return (tlZan - fZan);
+                }
+                else
+                {
+                    // 超過していない場合、ゼロを返す
+                    return (double)global.flgOff;
+                }
+            }
+        }
+
+        
         ///--------------------------------------------------------------       
         /// <summary>
         ///     人件費集計表作成（工事毎）</summary>
@@ -674,6 +778,168 @@ namespace ryowa_DATA.data
             this.Cursor = Cursors.Default;
         }
 
+
+        ///--------------------------------------------------------------       
+        /// <summary>
+        ///     人件費集計表作成（工事毎）</summary>
+        /// <param name="g">
+        ///     データグリッドビューオブジェクト</param>
+        /// <param name="sYY">
+        ///     対象年</param>
+        /// <param name="sMM">
+        ///     対象月</param>
+        ///--------------------------------------------------------------       
+        private void getSumDataKouji_201809(DataGridView g, int sYY, int sMM)
+        {
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                // 集計値クラスインスタンス
+                clsSumData cs = new clsSumData();
+
+                var context = new CsvContext();
+
+                // CSVの情報を示すオブジェクトを構築
+                var description = new CsvFileDescription
+                {
+                    SeparatorChar = ',',
+                    FirstLineHasColumnNames = false,
+                    EnforceCsvColumnAttribute = true,
+                    TextEncoding = Encoding.GetEncoding(932)
+                };
+
+                var s = context.Read<common.clsLinqCsv>(K_DRAFT_DATA, description)
+                    //.Select(n => new
+                    //{
+                    //    pID = n.pID,
+                    //    pName = n.pName,
+                    //    sID = n.sID,
+                    //    sName = n.sName,
+                    //    sHaichiDays = n.sHaichiDays,
+                    //    sJinkanhi = n.sJinkanhi
+                    //})
+                    .OrderBy(a => a.pID).ThenBy(a => a.sID);
+
+
+                g.Rows.Clear();
+                int iX = 0;
+                int svSID = 0;
+                int svPID = 0;
+                bool colorStatus = true;
+
+                // 集計データ読込
+                foreach (var t in s)
+                {
+                    if (svPID != 0 && svPID != t.pID)
+                    {
+                        // 工事計行追加
+                        g.Rows.Add();
+                        cs.sArray[1].pID = svPID.ToString();
+                        cs.sArray[1].pName = "集　　計";
+                        gridRowAddData(cs.sArray, dg, iX, 1, colorStatus);
+                        iX++;
+
+                        // 集計値初期化
+                        cs.sumDataCrear(cs.sArray);
+
+                        // グリッドカラーステータス反転
+                        if (colorStatus)
+                        {
+                            colorStatus = false;
+                        }
+                        else
+                        {
+                            colorStatus = true;
+                        }
+                    }
+
+                    svSID = t.sID;
+
+                    cs.sArray[0].pID = t.pID.ToString();        // 工事ID
+                    cs.sArray[0].pName = t.pName;               // 工事名称
+                    cs.sArray[0].sID = t.sID.ToString();        // 個人コード
+                    cs.sArray[0].sName = t.sName;               // 個人名
+                    cs.sArray[0].sHaichiDays = t.sHaichiDays;   // 配置日数取得
+                    cs.sArray[0].sJinkanhi = t.sJinkanhi;       // 人件費
+                    cs.sArray[0].sGanbaDays = Utility.StrtoInt(t.sGanbaDays);           // 現場日数
+                    cs.sArray[0].sKinmuchiDays = Utility.StrtoInt(t.sKinmuchiDays);     // 勤務地日数
+                    cs.sArray[0].sStayDays = Utility.StrtoInt(t.sStayDays);     // 宿泊日数
+                    cs.sArray[0].sHolTM = (int)(t.sHolTM * 60);                 // 休日勤務時間
+                    cs.sArray[0].sHouteiTM = (int)(t.sHouteiTM * 60);           // 法定休日勤務時間
+                    cs.sArray[0].sZanTM = (int)(t.sZanTM * 60);                 // 普通残業時間
+                    cs.sArray[0].sSiTM = (int)(t.sSiTM *60);                    // 深夜残業時間
+                    cs.sArray[0].sJyosetsu = Utility.StrtoInt(t.sJyosetsu);     // 除雪手当
+                    cs.sArray[0].sTokushu = Utility.StrtoInt(t.sTokushu);       // 特殊勤務
+                    cs.sArray[0].sTooshi = Utility.StrtoInt(t.sTooshi);         // 通し勤務
+                    cs.sArray[0].sYakan = Utility.StrtoInt(t.sYakan);           // 夜間手当
+                    cs.sArray[0].sShokumu = Utility.StrtoInt(t.sShokumu);       // 職務手当 
+
+
+                    // 集計行の値加算
+                    for (int i = 1; i < cs.sArray.Length; i++)
+                    {
+                        cs.sArray[i].sJinkanhi += cs.sArray[0].sJinkanhi;
+                        cs.sArray[i].sHaichiDays += cs.sArray[0].sHaichiDays;
+                        cs.sArray[i].sGanbaDays += cs.sArray[0].sGanbaDays;
+                        cs.sArray[i].sKinmuchiDays += cs.sArray[0].sKinmuchiDays;
+                        cs.sArray[i].sStayDays += cs.sArray[0].sStayDays;
+                        cs.sArray[i].sHolTM += cs.sArray[0].sHolTM;
+                        cs.sArray[i].sHouteiTM += cs.sArray[0].sHouteiTM;
+                        cs.sArray[i].sZanTM += cs.sArray[0].sZanTM;
+                        cs.sArray[i].sSiTM += cs.sArray[0].sSiTM;
+                        cs.sArray[i].sJyosetsu += cs.sArray[0].sJyosetsu;
+                        cs.sArray[i].sTokushu += cs.sArray[0].sTokushu;
+                        cs.sArray[i].sTooshi += cs.sArray[0].sTooshi;
+                        cs.sArray[i].sYakan += cs.sArray[0].sYakan;
+                        cs.sArray[i].sShokumu += cs.sArray[0].sShokumu;
+                    }
+
+                    // グリッドへ行追加
+                    g.Rows.Add();
+                    gridRowAddData(cs.sArray, dg, iX, 0, colorStatus);
+
+                    iX++;
+
+                    svPID = t.pID;
+                }
+
+                // 社員計行追加
+                dg.Rows.Add();
+                cs.sArray[1].pID = svPID.ToString();
+                cs.sArray[1].pName = "集　　計";
+                gridRowAddData(cs.sArray, dg, iX, 1, colorStatus);
+                iX++;
+
+                // グリッドカラーステータス反転
+                if (colorStatus)
+                {
+                    colorStatus = false;
+                }
+                else
+                {
+                    colorStatus = true;
+                }
+
+                // 総計行追加
+                dg.Rows.Add();
+                cs.sArray[2].pName = "総　　計";
+                gridRowAddData(cs.sArray, dg, iX, 2, colorStatus);
+
+                if (dg.Rows.Count > 0)
+                {
+                    dg.CurrentCell = null;
+                }
+
+                this.Cursor = Cursors.Default;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
         ///--------------------------------------------------------------------------------
         /// <summary>
         ///     データグリッドビューデータ行追加 </summary>
@@ -760,6 +1026,15 @@ namespace ryowa_DATA.data
 
         private void txtYear_TextChanged(object sender, EventArgs e)
         {
+            sumShainByKouji();
+        }
+
+        ///---------------------------------------------------------------
+        /// <summary>
+        ///     社員別工事別社員別人件費集計表表示 : 2018/09/26 </summary>
+        ///---------------------------------------------------------------
+        private void sumShainByKouji()
+        {
             //linkLabel1.Enabled = false;
             //linkLabel2.Enabled = false;
 
@@ -781,7 +1056,7 @@ namespace ryowa_DATA.data
             //int sYY = Utility.StrtoInt(txtYear.Text) + Properties.Settings.Default.rekiHosei;
             int sYY = Utility.StrtoInt(txtYear.Text); // 和暦から西暦へ 2018/07/13
             int sMM = Utility.StrtoInt(txtMonth.Text);
-            
+
             // 配置日数取得
             md = new clsMounthDays(sYY, sMM);
 
@@ -789,15 +1064,22 @@ namespace ryowa_DATA.data
             adp.FillByYYMM(dts.T_勤怠, sYY, sMM);
 
             // 勤怠データ表示
-            if (radioButton1.Checked)
-            {
-                getSumData(dg, sYY, sMM);
-            }
-            else if (radioButton2.Checked)
-            {
-                getSumDataKouji(dg, sYY, sMM);
-            }
+            //if (radioButton1.Checked)
+            //{
+            //    getSumData(dg, sYY, sMM);
+            //    grid2Csv();     // 工事毎人件費集計表データ出力
+            //}
+            //else if (radioButton2.Checked)
+            //{
+            //    //getSumDataKouji(dg, sYY, sMM);        // コメント化 2018/09/26
+            //    getSumDataKouji_201809(dg, sYY, sMM);   // 2018/09/26
+            //}
+
+            // 勤怠データ表示
+            getSumData(dg, sYY, sMM);
+            grid2Csv();     // 工事毎人件費集計表データ出力
         }
+
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -855,7 +1137,17 @@ namespace ryowa_DATA.data
 
                         string tittle2 = "土木部員配置＆人件費集計一覧表";
 
-                        if (radioButton1.Checked)
+                        //if (radioButton1.Checked)
+                        //{
+                        //    tittle2 += "（個人毎）";
+                        //}
+                        //else
+                        //{
+                        //    tittle2 += "（工事毎）";
+                        //}
+
+                        // 2018/09/26
+                        if (linkLabel1.Text == linkLabelKouji)
                         {
                             tittle2 += "（個人毎）";
                         }
@@ -863,7 +1155,7 @@ namespace ryowa_DATA.data
                         {
                             tittle2 += "（工事毎）";
                         }
-                        
+
                         tmpSheet.Cell(2, 2).Value = tittle2;
 
                         //グリッドを順番に読む
@@ -964,7 +1256,7 @@ namespace ryowa_DATA.data
 
                         //マウスポインタを元に戻す
                         this.Cursor = Cursors.Default;
-                        
+
                         //保存処理
                         tXls.SaveAs(sAppPath + @"\" + global.JINKENHI_XLSX);
                     }
@@ -1273,6 +1565,115 @@ namespace ryowa_DATA.data
             {
                 e.Handled = true;
                 return;
+            }
+        }
+
+        ///---------------------------------------------------------------------
+        /// <summary>
+        ///     工事別社員別人件費集計表ＣＳＶデータ出力 ：2018/09/26</summary>
+        ///     
+        ///---------------------------------------------------------------------
+        private void grid2Csv()
+        {
+            try
+            {
+                // 出力ファイル削除
+                if (System.IO.File.Exists(K_DRAFT_DATA))
+                {
+                    System.IO.File.Delete(K_DRAFT_DATA);
+                }
+
+                // 有効データがないとき
+                if (dg.Rows.Count < 3)
+                {
+                    linkLabel1.Visible = false;
+                    return;
+                }
+
+                string[] sArray = null;
+
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+
+                for (int iX = 0; iX < dg.Rows.Count; iX++)
+                {
+                    if (dg[cKID, iX].Value.ToString() == string.Empty)
+                    {
+                        continue;
+                    }
+
+                    sb.Clear();
+
+                    sb.Append(dg[cNum, iX].Value.ToString()).Append(",");    // 社員番号
+                    sb.Append(dg[cName, iX].Value.ToString()).Append(",");   // 氏名
+                    sb.Append(dg[cKID, iX].Value.ToString()).Append(",");   // コード
+                    sb.Append(dg[cKName, iX].Value.ToString()).Append(",");   // 工事名
+                    sb.Append(dg[cJinkenhi, iX].Value.ToString().Replace(",", "")).Append(",");   // 人件費計
+                    sb.Append(dg[cHaichiDays, iX].Value.ToString()).Append(",");   // 配置日数
+                    sb.Append(dg[cGenbaDays, iX].Value.ToString()).Append(",");   // 現場
+                    sb.Append(dg[cKinmuchiDays, iX].Value.ToString()).Append(",");   // 勤務地
+                    sb.Append(dg[cStayDays, iX].Value.ToString()).Append(",");   // 宿泊
+                    sb.Append(dg[cHolTM, iX].Value.ToString()).Append(",");   // 休日勤務
+                    sb.Append(dg[cHouteiTM, iX].Value.ToString()).Append(",");   // 法休勤務
+                    sb.Append(dg[cZanTM, iX].Value.ToString()).Append(",");   // 普通残業
+                    sb.Append(dg[cSiTM, iX].Value.ToString()).Append(",");   // 深夜残業
+                    sb.Append(dg[cJyosetsu, iX].Value.ToString()).Append(",");   // 除雪手当
+                    sb.Append(dg[cTokushu, iX].Value.ToString()).Append(",");   // 特殊出勤
+                    sb.Append(dg[cTooshi, iX].Value.ToString()).Append(",");   // 通し勤務
+                    sb.Append(dg[cYakan, iX].Value.ToString()).Append(",");   // 夜間手当
+                    sb.Append(dg[cShokumu, iX].Value.ToString());   // 職務手当
+
+                    Array.Resize(ref sArray, i + 1);
+                    sArray[i] = sb.ToString();
+
+                    i++;
+                }
+
+                // 工事毎人件費集計表CSVファイルを出力する
+                txtFileWrite(K_DRAFT_DATA, sArray);
+
+                linkLabel1.Text = linkLabelKouji;   // ラベルを工事にする 2018/09/26
+                linkLabel1.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        ///----------------------------------------------------------------------------
+        /// <summary>
+        ///     ＣＳＶファイルを出力する</summary>
+        /// <param name="outFilePath">
+        ///     出力するフォルダ</param>
+        /// <param name="arrayData">
+        ///     書き込む配列データ</param>
+        ///----------------------------------------------------------------------------
+        private void txtFileWrite(string sPath, string[] arrayData)
+        {
+            //// 付加文字列（タイムスタンプ）
+            //string newFileName = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString().PadLeft(2, '0') +
+            //                        DateTime.Now.Day.ToString().PadLeft(2, '0') + DateTime.Now.Hour.ToString().PadLeft(2, '0') +
+            //                        DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0');
+
+            //// ファイル名
+            //string outFileName = @"C:\RYOWA_DATA\xlsOut\koujiShainDraft" + ".csv";
+
+            // テキストファイル出力
+            System.IO.File.WriteAllLines(sPath, arrayData, System.Text.Encoding.GetEncoding(932));
+        }
+        
+        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // 2018/09/26
+            if (linkLabel1.Text == linkLabelKouji)
+            {
+                getSumDataKouji_201809(dg, Utility.StrtoInt(txtYear.Text), Utility.StrtoInt(txtMonth.Text));
+                linkLabel1.Text = linkLabelShain;   // ラベルを社員別にする 2018/09/26
+            }
+            else
+            {
+                sumShainByKouji();
             }
         }
     }

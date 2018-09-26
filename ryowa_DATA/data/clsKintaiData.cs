@@ -151,7 +151,7 @@ namespace ryowa_DATA.data
                             pHayade = gr.Sum(a => a.早出残業),
                             pZan = gr.Sum(a => a.普通残業),
                             pSinya = gr.Sum(a => a.深夜残業)
-                        });
+                        }).OrderBy(a => a.pID);     // 工事IDでソード 2018/09/25
                     
                     double tlZan = 0;   // 固定残業時間と比較する累積残業時間 2018/09/17
                     fZan *= 60;         // 固定残業時間を分単位に変換 2018/09/20

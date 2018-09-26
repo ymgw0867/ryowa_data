@@ -41,6 +41,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dg)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -126,10 +127,11 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.radioButton2);
             this.panel1.Controls.Add(this.radioButton1);
-            this.panel1.Location = new System.Drawing.Point(164, 12);
+            this.panel1.Location = new System.Drawing.Point(400, 11);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(154, 28);
             this.panel1.TabIndex = 76;
+            this.panel1.Visible = false;
             // 
             // radioButton2
             // 
@@ -161,7 +163,7 @@
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.radioButton7);
-            this.panel6.Location = new System.Drawing.Point(453, 12);
+            this.panel6.Location = new System.Drawing.Point(619, 12);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(132, 28);
             this.panel6.TabIndex = 77;
@@ -184,7 +186,7 @@
             // 
             this.radioButton8.AutoSize = true;
             this.radioButton8.Font = new System.Drawing.Font("Meiryo UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.radioButton8.Location = new System.Drawing.Point(463, 16);
+            this.radioButton8.Location = new System.Drawing.Point(629, 16);
             this.radioButton8.Name = "radioButton8";
             this.radioButton8.Size = new System.Drawing.Size(52, 21);
             this.radioButton8.TabIndex = 0;
@@ -193,11 +195,24 @@
             this.radioButton8.UseVisualStyleBackColor = true;
             this.radioButton8.Visible = false;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("メイリオ", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.linkLabel1.Location = new System.Drawing.Point(176, 16);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(160, 23);
+            this.linkLabel1.TabIndex = 78;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "工事別社員別集計表示";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_1);
+            // 
             // frmSumList2018
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1235, 697);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.radioButton8);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel1);
@@ -236,5 +251,6 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.RadioButton radioButton8;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
