@@ -274,6 +274,18 @@ namespace ryowa_Genba.master
                         r.パスワード = txtPass.Text;
                         r.更新ユーザーID = Utility.StrtoInt(txtCode.Text);
                         r.更新年月日 = DateTime.Now;
+
+                        // 2018/10/22
+                        r.走行起点 = Utility.StrtoInt(txtKm.Text);
+
+                        if (dtKiten.Checked)
+                        {
+                            r.走行起点日付 = dtKiten.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            r.走行起点日付 = string.Empty;
+                        }
                     }
                     else
                     {

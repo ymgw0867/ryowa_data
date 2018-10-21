@@ -17,6 +17,19 @@ namespace ryowa_Genba
         public Form1()
         {
             InitializeComponent();
+            
+            // M_社員に「現場手当有無」フィールド、「固定残業時間」フィールド追加 2018/09/24
+            dbCreateAlter();
+
+            // M_社員 : 2018/09/24
+            //bool upStatus = false;
+            genbaDataSetTableAdapters.M_社員TableAdapter mAdp = new genbaDataSetTableAdapters.M_社員TableAdapter();
+
+            // M_社員 現場手当有無 null → 0 : 2018/09/24
+            mAdp.UpdateQueryGenbaNull();
+
+            // M_社員 固定残業時間 null → 0 : 2018/09/24
+            mAdp.UpdateQueryKoteizanNull();
 
             // 個人情報登録確認
             if (msStatus())
@@ -70,20 +83,6 @@ namespace ryowa_Genba
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            // M_社員に「現場手当有無」フィールド、「固定残業時間」フィールド追加 2018/09/24
-            dbCreateAlter();
-            
-            // M_社員 : 2018/09/24
-            //bool upStatus = false;
-            genbaDataSetTableAdapters.M_社員TableAdapter mAdp = new genbaDataSetTableAdapters.M_社員TableAdapter();
-
-            // M_社員 現場手当有無 null → 0 : 2018/09/24
-            mAdp.UpdateQueryGenbaNull();
-
-            // M_社員 固定残業時間 null → 0 : 2018/09/24
-            mAdp.UpdateQueryKoteizanNull();
-
             // メール情報未登録のとき、出勤簿入力を不可とする
             if (!hpStatus())
             {
