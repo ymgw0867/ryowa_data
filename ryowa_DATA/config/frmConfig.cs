@@ -254,5 +254,19 @@ namespace ryowa_DATA.config
                 return;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("勤怠重複データをクリーンアップします。よろしいですか？",
+                "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+
+            this.Hide();
+            frmDupDatadel frm = new frmDupDatadel();
+            frm.ShowDialog();
+            this.Show();
+        }
     }
 }

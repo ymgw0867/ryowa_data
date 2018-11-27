@@ -89,6 +89,12 @@
     <Compile Include="config\frmConfig.designer.cs">
       <DependentUpon>frmConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="config\frmDupDatadel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="config\frmDupDatadel.Designer.cs">
+      <DependentUpon>frmDupDatadel.cs</DependentUpon>
+    </Compile>
     <Compile Include="data\clsDataUpdate.cs" />
     <Compile Include="data\clsKintaiData.cs" />
     <Compile Include="data\clsMailReceive.cs" />
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="config\frmConfig.resx">
       <DependentUpon>frmConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\frmDupDatadel.resx">
+      <DependentUpon>frmDupDatadel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="data\frmKintaiCheckList.resx">
       <DependentUpon>frmKintaiCheckList.cs</DependentUpon>
