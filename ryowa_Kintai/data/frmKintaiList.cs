@@ -863,7 +863,10 @@ namespace ryowa_Kintai.data
             int sYY = Utility.StrtoInt(txtYear.Text);   // 西暦に変更 2018/07/12
             int sMM = Utility.StrtoInt(txtMonth.Text);
 
-            adp.FillByYYMM(dts.T_勤怠, sYY, sMM);
+            //adp.FillByYYMM(dts.T_勤怠, sYY, sMM); // 2018/12/04 コメント化
+
+            // 社員で抽出に変更：2018/12/04
+            adp.FillBySCode(dts.T_勤怠, Utility.StrtoInt(txtNum.Text));
 
             DateTime dt;
 

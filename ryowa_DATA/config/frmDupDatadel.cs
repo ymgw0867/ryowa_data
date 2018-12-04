@@ -31,9 +31,29 @@ namespace ryowa_DATA.config
                     return;
                 }
 
+                // mdbバックアップファイル作成
+                mdbCopy();
+
+                // 重複データ削除
                 dupDataDelete();
+
+                // 閉じる
+                Close();
             }
         }
+
+        private void mdbCopy()
+        {
+            DateTime dt = DateTime.Now;
+            string frMdb = Properties.Settings.Default.mdbPath + "ryowa.mdb";
+            string toMdb = Properties.Settings.Default.mdbPath + "ryowa" +
+                           dt.Year.ToString() + dt.Month.ToString() + dt.Day.ToString() +
+                           dt.Hour.ToString() + dt.Minute.ToString() + dt.Second.ToString() +
+                           ".mdb";
+
+            System.IO.File.Copy(frMdb, toMdb);
+        }
+
 
         private bool eCheck()
         {

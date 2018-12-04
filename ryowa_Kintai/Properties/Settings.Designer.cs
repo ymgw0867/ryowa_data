@@ -25,7 +25,8 @@ namespace ryowa_Kintai.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\RYOWA_DATA\\MDB\\ryowa.mdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\\\192.168.1.1\\工事本部\\RYOWA_DATA\\MDB\\ry" +
+            "owa.mdb")]
         public string ryowaConnectionString {
             get {
                 return ((string)(this["ryowaConnectionString"]));
@@ -35,7 +36,8 @@ namespace ryowa_Kintai.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\RYOWA_DATA\\MDB\\ryowa.mdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\\\192.168.1.1\\工事本部\\RYOWA_DATA\\MDB\\ry" +
+            "owa.mdb")]
         public string ryowaConnectionString1 {
             get {
                 return ((string)(this["ryowaConnectionString1"]));

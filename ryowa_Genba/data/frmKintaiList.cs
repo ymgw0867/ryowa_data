@@ -834,7 +834,10 @@ namespace ryowa_Genba.data
             int sYY = Utility.StrtoInt(txtYear.Text);       // 和暦から西暦へ 2018/07/13
             int sMM = Utility.StrtoInt(txtMonth.Text);
 
-            adp.FillByYYMM(dts.T_勤怠, sYY, sMM);
+            //adp.FillByYYMM(dts.T_勤怠, sYY, sMM); // 2018/12/04 コメント化
+
+            // 「社員で抽出」に変更：2018/12/04
+            adp.FillBySCode(dts.T_勤怠, Utility.StrtoInt(txtNum.Text));
 
             DateTime dt;
 

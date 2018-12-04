@@ -6855,7 +6855,7 @@ namespace ryowa_Genba.genbaDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[4];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[5];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, " +
@@ -6869,16 +6869,21 @@ namespace ryowa_Genba.genbaDataSetTableAdapters {
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM [T_勤怠] where (YEAR(日付)=? AND MONTH(日付) = ?)";
+            this._commandCollection[2].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM [T_勤怠] where 社員ID = ?";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param1", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param2", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Current, false, null));
             this._commandCollection[3] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "UPDATE T_勤怠 SET 工事ID = ? where 工事ID = ?";
+            this._commandCollection[3].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM [T_勤怠] where (YEAR(日付)=? AND MONTH(日付) = ?)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Current, false, null));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Original, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param1", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param2", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = "UPDATE T_勤怠 SET 工事ID = ? where 工事ID = ?";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Original, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6933,8 +6938,44 @@ namespace ryowa_Genba.genbaDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByYYMM(genbaDataSet.T_勤怠DataTable dataTable, decimal Param1, decimal Param2) {
+        public virtual int FillBySCode(genbaDataSet.T_勤怠DataTable dataTable, global::System.Nullable<int> 社員ID) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual genbaDataSet.T_勤怠DataTable GetDataBySCode(global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            genbaDataSet.T_勤怠DataTable dataTable = new genbaDataSet.T_勤怠DataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByYYMM(genbaDataSet.T_勤怠DataTable dataTable, decimal Param1, decimal Param2) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(Param1));
             this.Adapter.SelectCommand.Parameters[1].Value = ((decimal)(Param2));
             if ((this.ClearBeforeFill == true)) {
@@ -6949,7 +6990,7 @@ namespace ryowa_Genba.genbaDataSetTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual genbaDataSet.T_勤怠DataTable GetDataByYYMM(decimal Param1, decimal Param2) {
-            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(Param1));
             this.Adapter.SelectCommand.Parameters[1].Value = ((decimal)(Param2));
             genbaDataSet.T_勤怠DataTable dataTable = new genbaDataSet.T_勤怠DataTable();
@@ -8210,7 +8251,7 @@ namespace ryowa_Genba.genbaDataSetTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
         public virtual int UpdateQueryKoujiID(global::System.Nullable<int> 工事ID, global::System.Nullable<int> Original_工事ID) {
-            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[3];
+            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[4];
             if ((工事ID.HasValue == true)) {
                 command.Parameters[0].Value = ((int)(工事ID.Value));
             }

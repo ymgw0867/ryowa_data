@@ -244,8 +244,7 @@ namespace ryowa_DATA.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\\\192.168.1.1\\工事本部\\RYOWA_DATA\\MDB\\ry" +
-            "owa.mdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\RYOWA_DATA\\MDB\\ryowa.mdb")]
         public string mdbOlePath {
             get {
                 return ((string)(this["mdbOlePath"]));

@@ -8577,7 +8577,7 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[3];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[4];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, " +
@@ -8590,10 +8590,18 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠 where (YEAR(日付) = ? AND MONTH(日付) = ?)";
+            this._commandCollection[2].CommandText = "SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, " +
+                "退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全" +
+                "走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠 w" +
+                "here 社員ID = ?";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param1", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param2", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠 where (YEAR(日付) = ? AND MONTH(日付) = ?)";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param1", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Param2", global::System.Data.OleDb.OleDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "", global::System.Data.DataRowVersion.Current, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8648,8 +8656,44 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByYYMM(kintaiDataSet.T_勤怠DataTable dataTable, decimal Param1, decimal Param2) {
+        public virtual int FillBySCode(kintaiDataSet.T_勤怠DataTable dataTable, global::System.Nullable<int> 社員ID) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual kintaiDataSet.T_勤怠DataTable GetDataBySCode(global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            kintaiDataSet.T_勤怠DataTable dataTable = new kintaiDataSet.T_勤怠DataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByYYMM(kintaiDataSet.T_勤怠DataTable dataTable, decimal Param1, decimal Param2) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(Param1));
             this.Adapter.SelectCommand.Parameters[1].Value = ((decimal)(Param2));
             if ((this.ClearBeforeFill == true)) {
@@ -8664,7 +8708,7 @@ namespace ryowa_Kintai.kintaiDataSetTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual kintaiDataSet.T_勤怠DataTable GetDataByYYMM(decimal Param1, decimal Param2) {
-            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(Param1));
             this.Adapter.SelectCommand.Parameters[1].Value = ((decimal)(Param2));
             kintaiDataSet.T_勤怠DataTable dataTable = new kintaiDataSet.T_勤怠DataTable();
