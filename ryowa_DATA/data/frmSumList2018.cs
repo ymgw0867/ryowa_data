@@ -1135,7 +1135,8 @@ namespace ryowa_DATA.data
                         string tittle1 = txtYear.Text + "年 " + txtMonth.Text + "月分";
                         tmpSheet.Cell(1, 2).Value = tittle1;
 
-                        string tittle2 = "土木部員配置＆人件費集計一覧表";
+                        //string tittle2 = "土木部員配置＆人件費集計一覧表";
+                        string tittle2 = "部員配置＆人件費集計一覧表";   // 2018/12/15「土木」を撤廃
 
                         //if (radioButton1.Checked)
                         //{

@@ -90,11 +90,52 @@ namespace ryowa_MailReceive.mail
 			}
 		}
 
-		/// <summary>
-		/// POP サーバに溜まっているメールのリストを取得します。
-		/// </summary>
-		/// <returns>System.String を格納した ArrayList。</returns>
-		public ArrayList GetList()
+        ///--------------------------------------------------------------------
+        /// <summary>
+        ///     POP サーバに溜まっているメール数を取得します。
+        ///     : 2018/12/15</summary>
+        /// <returns>
+        ///     メール数 </returns>
+        ///--------------------------------------------------------------------
+        public int GetStat()
+        {
+            // STAT 送信
+            SendLine("STAT");
+            string s = ReadLine();
+            if (!s.StartsWith("+OK"))
+            {
+                throw new PopClientException("STAT 送信時に POP サーバが \"" + s + "\" を返しました。");
+            }
+
+            // サーバにたまっているメールの数を取得
+            string[] c = s.Split(' ');
+            return Utility.StrtoInt(c[1]);
+
+            //ArrayList list = new ArrayList();
+            //while (true)
+            //{
+            //    s = ReadLine();
+            //    if (s == ".")
+            //    {
+            //        // 終端に到達
+            //        break;
+            //    }
+            //    // メール番号部分のみを取り出し格納
+            //    int p = s.IndexOf(' ');
+            //    if (p > 0)
+            //    {
+            //        s = s.Substring(0, p);
+            //    }
+            //    list.Add(s);
+            //}
+            //return list;
+        }
+
+        /// <summary>
+        /// POP サーバに溜まっているメールのリストを取得します。
+        /// </summary>
+        /// <returns>System.String を格納した ArrayList。</returns>
+        public ArrayList GetList()
 		{
 			// LIST 送信
 			SendLine("LIST");

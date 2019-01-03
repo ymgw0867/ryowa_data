@@ -33,58 +33,19 @@ namespace ryowa_MailReceive
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            // メールデータ受信
-            PopTest();
+            // タイマー停止：2018/12/14
+            timer1.Enabled = false;
 
-            int n = 0;
-
-            data.clsDataUpdate du = new data.clsDataUpdate();
-
-            // 勤怠データ更新
-            n = du.csvToMdb(Properties.Settings.Default.reCsvPath, global.TIMECARD);
-
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿データ更新", n.ToString() + "件更新しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿データ更新", "失敗しました");
-            }
-
-            // 出勤簿・車両走行報告書要求処理
-            n = du.reqExcel(Properties.Settings.Default.reCsvPath, global.DATAREQUEST);
-
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿・車両走行報告書要求処理", n.ToString() + "件処理しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿・車両走行報告書要求処理", "失敗しました");
-            }
-
-            // 出勤簿確認送信処理
-            n = du.checkToMdb(Properties.Settings.Default.reCsvPath, global.CHECKEDDATA);
-
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿確認チェック更新", n.ToString() + "件更新しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿確認チェック更新", "失敗しました");
-            }
+            // タイマータスク実行
+            timer_Task();
+            
+            // タイマー再開：2018/12/14
+            timer1.Enabled = true;
         }
 
         //処理中ステータス
         int _mJob = global.flgOff;
+        bool _start = false; 
 
         mailReceiveDataSet dts = new mailReceiveDataSet();
         mailReceiveDataSetTableAdapters.メール設定TableAdapter adp = new mailReceiveDataSetTableAdapters.メール設定TableAdapter();
@@ -120,13 +81,14 @@ namespace ryowa_MailReceive
                 g.EnableHeadersVisualStyles = false;
 
                 // 列ヘッダー表示位置指定
-                g.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
+                g.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                 // 列ヘッダーフォント指定
                 g.ColumnHeadersDefaultCellStyle.Font = new Font("Meiryo UI", (float)9.5, FontStyle.Regular);
 
                 // データフォント指定
-                g.DefaultCellStyle.Font = new Font("Meiryo UI", (float)9.5, FontStyle.Regular);
+                //g.DefaultCellStyle.Font = new Font("Meiryo UI", (float)9.5, FontStyle.Regular);
+                g.DefaultCellStyle.Font = new Font("Meiryo UI", 9, FontStyle.Regular);
 
                 // 行の高さ
                 g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -258,16 +220,36 @@ namespace ryowa_MailReceive
 
             //addListView(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), global.Msglog, Color.Black);
 
+            // ログ表示：2018/12/14
+            label1.Text = "POPサーバーへ接続しました...";
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
             // ログインします。
             pop.Login(username, password);
 
-            // POP サーバに溜まっているメールのリストを取得します。
-            ArrayList list = pop.GetList();
+            // ログ表示：2018/12/14
+            label1.Text = "ログインしました... " + username;
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
 
-            for (int i = 0; i < list.Count; ++i)
+            //// POP サーバに溜まっているメールのリストを取得します。
+            //ArrayList list = pop.GetList();  // 2018/12/15 コメント化
+
+            // POP サーバに溜まっているメールのリスト数を取得します。：2018/12/15
+            int mCnt = pop.GetStat();
+
+            //for (int i = 0; i < list.Count; ++i)
+            for (int i = 0; i < mCnt; ++i)
             {
+                // ログ表示：2018/12/14
+                label1.Text = "メールリストを確認しています... " + i.ToString();
+                System.Threading.Thread.Sleep(10);
+                Application.DoEvents();
+
                 // メール本体を取得する
-                string mailtext = pop.GetMail((string)list[i]);
+                //string mailtext = pop.GetMail((string)list[i]);  // 2018/12/15 コメント化
+                string mailtext = pop.GetMail((i + 1).ToString());
 
                 // Mail クラスを作成
                 Mail mail = new Mail(mailtext);
@@ -663,10 +645,20 @@ namespace ryowa_MailReceive
 
                     _mCount++;
                 }
+
+                // ログ表示：2018/12/14
+                label1.Text = _mCount + "件のメールを受信しました... ";
+                System.Threading.Thread.Sleep(100);
+                Application.DoEvents();
             }
 
             // 切断する
             pop.Close();
+
+            // ログ表示：2018/12/14
+            label1.Text = "POPサーバーを切断しました... ";
+            System.Threading.Thread.Sleep(100);
+            Application.DoEvents();
 
             //非処理中ステータス
             _mJob = global.JOBOUT;
@@ -738,10 +730,21 @@ namespace ryowa_MailReceive
 
             try
             {
+                // 2018/12/15 以下、コメント化
                 // messageID読み込み
-                idAdp.Fill(dts.messageID);
+                //idAdp.Fill(dts.messageID);
 
-                if (dts.messageID.Count(a => a.message == stemp) > 0)
+                //if (dts.messageID.Count(a => a.message == stemp) > 0)
+                //{
+                //    tf = false;
+                //}
+                //else
+                //{
+                //    tf = true;
+                //}
+
+                // ScalarQueryに変更：2018/12/15
+                if (idAdp.ScalarQuery(stemp) > 0)
                 {
                     tf = false;
                 }
@@ -791,54 +794,56 @@ namespace ryowa_MailReceive
 
             dg.Rows.Clear();
 
-            // データ受信
-            PopTest();
+            // 2018/12/14 以下、コメント化
 
-            int n = 0;
+            //// データ受信
+            //PopTest();
 
-            data.clsDataUpdate du = new data.clsDataUpdate();
+            //int n = 0;
+
+            //data.clsDataUpdate du = new data.clsDataUpdate();
             
-            // 勤怠データ更新
-            n = du.csvToMdb(Properties.Settings.Default.reCsvPath, global.TIMECARD);
+            //// 勤怠データ更新
+            //n = du.csvToMdb(Properties.Settings.Default.reCsvPath, global.TIMECARD);
 
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿データ更新", n.ToString() + "件更新しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿データ更新", "失敗しました");
-            }
+            //if (n > 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿データ更新", n.ToString() + "件更新しました");
+            //}
+            //else if (n < 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿データ更新", "失敗しました");
+            //}
 
-            // 出勤簿・車両走行報告書要求処理
-            n = du.reqExcel(Properties.Settings.Default.reCsvPath, global.DATAREQUEST);
+            //// 出勤簿・車両走行報告書要求処理
+            //n = du.reqExcel(Properties.Settings.Default.reCsvPath, global.DATAREQUEST);
 
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿・車両走行報告書要求処理", n.ToString() + "件処理しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿・車両走行報告書要求処理", "失敗しました");
-            }
+            //if (n > 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿・車両走行報告書要求処理", n.ToString() + "件処理しました");
+            //}
+            //else if (n < 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿・車両走行報告書要求処理", "失敗しました");
+            //}
 
-            // 出勤簿確認チェック処理
-            n = du.checkToMdb(Properties.Settings.Default.reCsvPath, global.CHECKEDDATA);
+            //// 出勤簿確認チェック処理
+            //n = du.checkToMdb(Properties.Settings.Default.reCsvPath, global.CHECKEDDATA);
 
-            if (n > 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿確認チェック更新", n.ToString() + "件更新しました");
-            }
-            else if (n < 0)
-            {
-                // 処理グリッド
-                taskGridView("出勤簿確認チェック更新", "失敗しました");
-            }
+            //if (n > 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿確認チェック更新", n.ToString() + "件更新しました");
+            //}
+            //else if (n < 0)
+            //{
+            //    // 処理グリッド
+            //    taskGridView("出勤簿確認チェック更新", "失敗しました");
+            //}
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -852,13 +857,20 @@ namespace ryowa_MailReceive
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            //インターバルセット
-            timer1.Interval = Properties.Settings.Default.receiveSpan * 1000; // 秒単位
-            timer1.Enabled = true;
+            // 2018/12/14 以下、コメント化
+            ////インターバルセット
+            //timer1.Interval = Properties.Settings.Default.receiveSpan * 1000; // 秒単位
+            //timer1.Enabled = true;
         }
 
         private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_start && timer1.Enabled == false)
+            {
+                MessageBox.Show("タスクを実行中です。少し時間をおいて再度実行してください。", "実行中",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             notifyIcon1.Visible = false;
 
             // 終了する
@@ -899,7 +911,157 @@ namespace ryowa_MailReceive
             sw.Close();
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            _start = true;  // 処理開始を表すステータス：2018/12/14
+
+            button1.Enabled = false;
+
+            // タイマータスク実行
+            timer_Task();            
+
+            //インターバルセット
+            timer1.Interval = Properties.Settings.Default.receiveSpan * 1000; // 秒単位
+            timer1.Enabled = true;
+        }
+
+        ///------------------------------------------------------------
+        /// <summary>
+        ///     タイマーごとに実行する処理を記述 : 2018/12/14 </summary>
+        ///------------------------------------------------------------
+        private void timer_Task()
+        {
+            DateTime dt;
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "タスクを開始しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
+            taskGridView("タスクを開始しました", string.Empty);
+
+            // データ受信
+            PopTest();
+
+            int n = 0;
+
+            data.clsDataUpdate du = new data.clsDataUpdate();
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿データ更新を開始しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
+            dt = DateTime.Now;
+            label1.Text = "出勤簿データ更新中です..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            // -------------------------------------------------------------------
+            //      勤怠データ更新
+            // -------------------------------------------------------------------
+            n = du.csvToMdb(Properties.Settings.Default.reCsvPath, global.TIMECARD);
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿データ更新を終了しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            if (n > 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿データ更新", n.ToString() + "件更新しました");
+            }
+            else if (n < 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿データ更新", "失敗しました");
+            }
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿・車両走行報告書要求処理を開始しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
+            dt = DateTime.Now;
+            label1.Text = "出勤簿・車両走行報告書要求処理を実行中です..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            // -------------------------------------------------------------------
+            //      出勤簿・車両走行報告書要求処理
+            // -------------------------------------------------------------------
+            n = du.reqExcel(Properties.Settings.Default.reCsvPath, global.DATAREQUEST);
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿・車両走行報告書要求処理を終了しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            if (n > 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿・車両走行報告書要求処理", n.ToString() + "件処理しました");
+            }
+            else if (n < 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿・車両走行報告書要求処理", "失敗しました");
+            }
 
 
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿確認チェック更新を開始しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
+            dt = DateTime.Now;
+            label1.Text = "出勤簿確認チェック更新中です..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            // -------------------------------------------------------------------
+            //      出勤簿確認チェック処理
+            // -------------------------------------------------------------------
+            n = du.checkToMdb(Properties.Settings.Default.reCsvPath, global.CHECKEDDATA);
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "出勤簿確認チェック更新を終了しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(30);
+            Application.DoEvents();
+
+            if (n > 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿確認チェック更新", n.ToString() + "件更新しました");
+            }
+            else if (n < 0)
+            {
+                // 処理グリッド
+                taskGridView("出勤簿確認チェック更新", "失敗しました");
+            }
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "タスクを終了しました..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(100);
+            Application.DoEvents();
+
+            taskGridView("タスクを終了しました", string.Empty);
+
+            // ログ表示：2018/12/14
+            dt = DateTime.Now;
+            label1.Text = "待機中です..." + dt.ToShortDateString() + " " + dt.Hour.ToString().ToString().PadLeft(2, '0') + ":" + dt.Minute.ToString().PadLeft(2, '0') + ":" + dt.Second.ToString().PadLeft(2, '0');
+            System.Threading.Thread.Sleep(1000);
+            Application.DoEvents();
+
+        }
     }
 }

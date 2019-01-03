@@ -108,9 +108,14 @@ namespace ryowa_DATA.data
                     // 配置日数（小数点以下第一位四捨五入） 2018/07/10
                     int hh = (int)((j.cnt * Properties.Settings.Default.tempdays / monthWorkDays * 100 + 5) / 10);
                     decimal h = (decimal)hh / 10;
+
                     if ((hDaysTl + h) > Properties.Settings.Default.tempdays)
                     {
-                        h = (int)(Properties.Settings.Default.tempdays - hDaysTl);
+                        //h = (int)(Properties.Settings.Default.tempdays - hDaysTl);
+                        h = Properties.Settings.Default.tempdays - hDaysTl;
+
+                        // 2018/12/15
+                        hDaysTl += h;
                     }
                     else
                     {

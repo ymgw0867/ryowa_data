@@ -109,8 +109,9 @@ namespace ryowa_DATA
             // 過去messageID削除
             pastMsgIdDelete();
 
-            // MDB最適化
-            Utility.mdbCompact();
+            // 2018/12/20 コメント化
+            //// MDB最適化
+            //Utility.mdbCompact();
 
             // 閉じる
             this.Close();

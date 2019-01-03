@@ -6335,11 +6335,16 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[2];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, message, 受信日時 FROM messageID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT COUNT(*) FROM messageID where message = ?";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("message", global::System.Data.OleDb.OleDbType.WChar, 255, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "message", global::System.Data.DataRowVersion.Current, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6513,6 +6518,40 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
                 if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
                     this.Adapter.UpdateCommand.Connection.Close();
                 }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<int> ScalarQuery(string message) {
+            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[1];
+            if ((message == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(message));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return new global::System.Nullable<int>();
+            }
+            else {
+                return new global::System.Nullable<int>(((int)(returnValue)));
             }
         }
     }
@@ -6968,13 +7007,109 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[6];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, " +
                 "退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全" +
                 "走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, " +
+                "退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全" +
+                "走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠 w" +
+                "here 社員ID = ?";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[2] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"SELECT ID, 日付, 社員ID, 工事ID, 出勤印, 出社時刻時, 出社時刻分, 開始時刻時, 開始時刻分, 終了時刻時, 終了時刻分, 退出時刻時, 退出時刻分, 休憩, 普通残業, 深夜残業, 休日出勤, 代休, 休日, 欠勤, 宿泊, 備考, 除雪当番, 特殊出勤, 通し勤務, 夜間手当, 職務手当, 全走行, 通勤業務走行, 私用走行, 代休対象日, 確認印, 登録年月日, 登録ユーザーID, 更新年月日, 更新ユーザーID, 早出残業 FROM T_勤怠 where 日付 = ? and 社員ID = ?";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("日付", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "日付", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = @"INSERT INTO `T_勤怠` (`日付`, `社員ID`, `工事ID`, `出勤印`, `出社時刻時`, `出社時刻分`, `開始時刻時`, `開始時刻分`, `終了時刻時`, `終了時刻分`, `退出時刻時`, `退出時刻分`, `休憩`, `普通残業`, `深夜残業`, `休日出勤`, `代休`, `休日`, `欠勤`, `宿泊`, `備考`, `除雪当番`, `特殊出勤`, `通し勤務`, `夜間手当`, `職務手当`, `全走行`, `通勤業務走行`, `私用走行`, `代休対象日`, `確認印`, `登録年月日`, `登録ユーザーID`, `更新年月日`, `更新ユーザーID`, `早出残業`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("日付", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "日付", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出勤印", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出勤印", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出社時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出社時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出社時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出社時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("開始時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "開始時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("開始時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "開始時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("終了時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "終了時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("終了時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "終了時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("退出時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "退出時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("退出時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "退出時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休憩", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休憩", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("普通残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "普通残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("深夜残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "深夜残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休日出勤", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休日出勤", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("代休", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "代休", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休日", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("欠勤", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "欠勤", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("宿泊", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "宿泊", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("備考", global::System.Data.OleDb.OleDbType.WChar, 255, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "備考", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("除雪当番", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "除雪当番", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("特殊出勤", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "特殊出勤", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("通し勤務", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "通し勤務", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("夜間手当", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "夜間手当", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("職務手当", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "職務手当", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("全走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "全走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("通勤業務走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "通勤業務走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("私用走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "私用走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("代休対象日", global::System.Data.OleDb.OleDbType.WChar, 8, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "代休対象日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("確認印", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "確認印", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("早出残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "早出残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = @"UPDATE `T_勤怠` SET  `工事ID` = ?, `出勤印` = ?, `出社時刻時` = ?, `出社時刻分` = ?, `開始時刻時` = ?, `開始時刻分` = ?, `終了時刻時` = ?, `終了時刻分` = ?, `退出時刻時` = ?, `退出時刻分` = ?, `休憩` = ?, `普通残業` = ?, `深夜残業` = ?, `休日出勤` = ?, `代休` = ?, `休日` = ?, `欠勤` = ?, `宿泊` = ?, `備考` = ?, `全走行` = ?, `通勤業務走行` = ?, `私用走行` = ?, `代休対象日` = ?, `登録年月日` = ?, `登録ユーザーID` = ?, `更新年月日` = ?, `更新ユーザーID` = ?, `早出残業` = ? WHERE 日付 = ? AND 社員ID = ?";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("工事ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "工事ID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出勤印", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出勤印", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出社時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出社時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("出社時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "出社時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("開始時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "開始時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("開始時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "開始時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("終了時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "終了時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("終了時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "終了時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("退出時刻時", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "退出時刻時", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("退出時刻分", global::System.Data.OleDb.OleDbType.WChar, 2, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "退出時刻分", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休憩", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休憩", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("普通残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "普通残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("深夜残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "深夜残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休日出勤", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休日出勤", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("代休", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "代休", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("休日", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "休日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("欠勤", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "欠勤", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("宿泊", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "宿泊", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("備考", global::System.Data.OleDb.OleDbType.WChar, 255, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "備考", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("全走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "全走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("通勤業務走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "通勤業務走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("私用走行", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "私用走行", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("代休対象日", global::System.Data.OleDb.OleDbType.WChar, 8, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "代休対象日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("登録ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "登録ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新ユーザーID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新ユーザーID", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("早出残業", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "早出残業", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_日付", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "日付", global::System.Data.DataRowVersion.Original, false, null));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Original, false, null));
+            this._commandCollection[5] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = "UPDATE `T_勤怠` SET  `確認印` = ?,  `更新年月日` = ?  WHERE (`日付` = ? AND `社員ID` = ?)";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("確認印", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "確認印", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("更新年月日", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "更新年月日", global::System.Data.DataRowVersion.Current, false, null));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_日付", global::System.Data.OleDb.OleDbType.Date, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "日付", global::System.Data.DataRowVersion.Original, false, null));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("Original_社員ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "社員ID", global::System.Data.DataRowVersion.Original, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6996,6 +7131,90 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual mailReceiveDataSet.T_勤怠DataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            mailReceiveDataSet.T_勤怠DataTable dataTable = new mailReceiveDataSet.T_勤怠DataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBySCode(mailReceiveDataSet.T_勤怠DataTable dataTable, global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual mailReceiveDataSet.T_勤怠DataTable GetDataBySCode(global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            mailReceiveDataSet.T_勤怠DataTable dataTable = new mailReceiveDataSet.T_勤怠DataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByYYMMDDSCode(mailReceiveDataSet.T_勤怠DataTable dataTable, global::System.Nullable<global::System.DateTime> 日付, global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((日付.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(日付.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual mailReceiveDataSet.T_勤怠DataTable GetDataByYYMMDDSCode(global::System.Nullable<global::System.DateTime> 日付, global::System.Nullable<int> 社員ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((日付.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(日付.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((社員ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(社員ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             mailReceiveDataSet.T_勤怠DataTable dataTable = new mailReceiveDataSet.T_勤怠DataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -8248,6 +8467,561 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
                 }
             }
         }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual int InsertQuery(
+                    global::System.Nullable<global::System.DateTime> 日付, 
+                    global::System.Nullable<int> 社員ID, 
+                    global::System.Nullable<int> 工事ID, 
+                    global::System.Nullable<int> 出勤印, 
+                    string 出社時刻時, 
+                    string 出社時刻分, 
+                    string 開始時刻時, 
+                    string 開始時刻分, 
+                    string 終了時刻時, 
+                    string 終了時刻分, 
+                    string 退出時刻時, 
+                    string 退出時刻分, 
+                    global::System.Nullable<int> 休憩, 
+                    global::System.Nullable<int> 普通残業, 
+                    global::System.Nullable<int> 深夜残業, 
+                    global::System.Nullable<int> 休日出勤, 
+                    global::System.Nullable<int> 代休, 
+                    global::System.Nullable<int> 休日, 
+                    global::System.Nullable<int> 欠勤, 
+                    global::System.Nullable<int> 宿泊, 
+                    string 備考, 
+                    global::System.Nullable<int> 除雪当番, 
+                    global::System.Nullable<int> 特殊出勤, 
+                    global::System.Nullable<int> 通し勤務, 
+                    global::System.Nullable<int> 夜間手当, 
+                    global::System.Nullable<int> 職務手当, 
+                    global::System.Nullable<int> 全走行, 
+                    global::System.Nullable<int> 通勤業務走行, 
+                    global::System.Nullable<int> 私用走行, 
+                    string 代休対象日, 
+                    global::System.Nullable<int> 確認印, 
+                    global::System.Nullable<global::System.DateTime> 登録年月日, 
+                    global::System.Nullable<int> 登録ユーザーID, 
+                    global::System.Nullable<global::System.DateTime> 更新年月日, 
+                    global::System.Nullable<int> 更新ユーザーID, 
+                    global::System.Nullable<int> 早出残業) {
+            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[3];
+            if ((日付.HasValue == true)) {
+                command.Parameters[0].Value = ((System.DateTime)(日付.Value));
+            }
+            else {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((社員ID.HasValue == true)) {
+                command.Parameters[1].Value = ((int)(社員ID.Value));
+            }
+            else {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((工事ID.HasValue == true)) {
+                command.Parameters[2].Value = ((int)(工事ID.Value));
+            }
+            else {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((出勤印.HasValue == true)) {
+                command.Parameters[3].Value = ((int)(出勤印.Value));
+            }
+            else {
+                command.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((出社時刻時 == null)) {
+                command.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[4].Value = ((string)(出社時刻時));
+            }
+            if ((出社時刻分 == null)) {
+                command.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[5].Value = ((string)(出社時刻分));
+            }
+            if ((開始時刻時 == null)) {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[6].Value = ((string)(開始時刻時));
+            }
+            if ((開始時刻分 == null)) {
+                command.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[7].Value = ((string)(開始時刻分));
+            }
+            if ((終了時刻時 == null)) {
+                command.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[8].Value = ((string)(終了時刻時));
+            }
+            if ((終了時刻分 == null)) {
+                command.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[9].Value = ((string)(終了時刻分));
+            }
+            if ((退出時刻時 == null)) {
+                command.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[10].Value = ((string)(退出時刻時));
+            }
+            if ((退出時刻分 == null)) {
+                command.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[11].Value = ((string)(退出時刻分));
+            }
+            if ((休憩.HasValue == true)) {
+                command.Parameters[12].Value = ((int)(休憩.Value));
+            }
+            else {
+                command.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            if ((普通残業.HasValue == true)) {
+                command.Parameters[13].Value = ((int)(普通残業.Value));
+            }
+            else {
+                command.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            if ((深夜残業.HasValue == true)) {
+                command.Parameters[14].Value = ((int)(深夜残業.Value));
+            }
+            else {
+                command.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            if ((休日出勤.HasValue == true)) {
+                command.Parameters[15].Value = ((int)(休日出勤.Value));
+            }
+            else {
+                command.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            if ((代休.HasValue == true)) {
+                command.Parameters[16].Value = ((int)(代休.Value));
+            }
+            else {
+                command.Parameters[16].Value = global::System.DBNull.Value;
+            }
+            if ((休日.HasValue == true)) {
+                command.Parameters[17].Value = ((int)(休日.Value));
+            }
+            else {
+                command.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            if ((欠勤.HasValue == true)) {
+                command.Parameters[18].Value = ((int)(欠勤.Value));
+            }
+            else {
+                command.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            if ((宿泊.HasValue == true)) {
+                command.Parameters[19].Value = ((int)(宿泊.Value));
+            }
+            else {
+                command.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            if ((備考 == null)) {
+                command.Parameters[20].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[20].Value = ((string)(備考));
+            }
+            if ((除雪当番.HasValue == true)) {
+                command.Parameters[21].Value = ((int)(除雪当番.Value));
+            }
+            else {
+                command.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            if ((特殊出勤.HasValue == true)) {
+                command.Parameters[22].Value = ((int)(特殊出勤.Value));
+            }
+            else {
+                command.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            if ((通し勤務.HasValue == true)) {
+                command.Parameters[23].Value = ((int)(通し勤務.Value));
+            }
+            else {
+                command.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            if ((夜間手当.HasValue == true)) {
+                command.Parameters[24].Value = ((int)(夜間手当.Value));
+            }
+            else {
+                command.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            if ((職務手当.HasValue == true)) {
+                command.Parameters[25].Value = ((int)(職務手当.Value));
+            }
+            else {
+                command.Parameters[25].Value = global::System.DBNull.Value;
+            }
+            if ((全走行.HasValue == true)) {
+                command.Parameters[26].Value = ((int)(全走行.Value));
+            }
+            else {
+                command.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            if ((通勤業務走行.HasValue == true)) {
+                command.Parameters[27].Value = ((int)(通勤業務走行.Value));
+            }
+            else {
+                command.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            if ((私用走行.HasValue == true)) {
+                command.Parameters[28].Value = ((int)(私用走行.Value));
+            }
+            else {
+                command.Parameters[28].Value = global::System.DBNull.Value;
+            }
+            if ((代休対象日 == null)) {
+                command.Parameters[29].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[29].Value = ((string)(代休対象日));
+            }
+            if ((確認印.HasValue == true)) {
+                command.Parameters[30].Value = ((int)(確認印.Value));
+            }
+            else {
+                command.Parameters[30].Value = global::System.DBNull.Value;
+            }
+            if ((登録年月日.HasValue == true)) {
+                command.Parameters[31].Value = ((System.DateTime)(登録年月日.Value));
+            }
+            else {
+                command.Parameters[31].Value = global::System.DBNull.Value;
+            }
+            if ((登録ユーザーID.HasValue == true)) {
+                command.Parameters[32].Value = ((int)(登録ユーザーID.Value));
+            }
+            else {
+                command.Parameters[32].Value = global::System.DBNull.Value;
+            }
+            if ((更新年月日.HasValue == true)) {
+                command.Parameters[33].Value = ((System.DateTime)(更新年月日.Value));
+            }
+            else {
+                command.Parameters[33].Value = global::System.DBNull.Value;
+            }
+            if ((更新ユーザーID.HasValue == true)) {
+                command.Parameters[34].Value = ((int)(更新ユーザーID.Value));
+            }
+            else {
+                command.Parameters[34].Value = global::System.DBNull.Value;
+            }
+            if ((早出残業.HasValue == true)) {
+                command.Parameters[35].Value = ((int)(早出残業.Value));
+            }
+            else {
+                command.Parameters[35].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int UpdateQuery(
+                    global::System.Nullable<int> 工事ID, 
+                    global::System.Nullable<int> 出勤印, 
+                    string 出社時刻時, 
+                    string 出社時刻分, 
+                    string 開始時刻時, 
+                    string 開始時刻分, 
+                    string 終了時刻時, 
+                    string 終了時刻分, 
+                    string 退出時刻時, 
+                    string 退出時刻分, 
+                    global::System.Nullable<int> 休憩, 
+                    global::System.Nullable<int> 普通残業, 
+                    global::System.Nullable<int> 深夜残業, 
+                    global::System.Nullable<int> 休日出勤, 
+                    global::System.Nullable<int> 代休, 
+                    global::System.Nullable<int> 休日, 
+                    global::System.Nullable<int> 欠勤, 
+                    global::System.Nullable<int> 宿泊, 
+                    string 備考, 
+                    global::System.Nullable<int> 全走行, 
+                    global::System.Nullable<int> 通勤業務走行, 
+                    global::System.Nullable<int> 私用走行, 
+                    string 代休対象日, 
+                    global::System.Nullable<global::System.DateTime> 登録年月日, 
+                    global::System.Nullable<int> 登録ユーザーID, 
+                    global::System.Nullable<global::System.DateTime> 更新年月日, 
+                    global::System.Nullable<int> 更新ユーザーID, 
+                    global::System.Nullable<int> 早出残業, 
+                    global::System.Nullable<global::System.DateTime> Original_日付, 
+                    global::System.Nullable<int> Original_社員ID) {
+            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[4];
+            if ((工事ID.HasValue == true)) {
+                command.Parameters[0].Value = ((int)(工事ID.Value));
+            }
+            else {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((出勤印.HasValue == true)) {
+                command.Parameters[1].Value = ((int)(出勤印.Value));
+            }
+            else {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((出社時刻時 == null)) {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[2].Value = ((string)(出社時刻時));
+            }
+            if ((出社時刻分 == null)) {
+                command.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[3].Value = ((string)(出社時刻分));
+            }
+            if ((開始時刻時 == null)) {
+                command.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[4].Value = ((string)(開始時刻時));
+            }
+            if ((開始時刻分 == null)) {
+                command.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[5].Value = ((string)(開始時刻分));
+            }
+            if ((終了時刻時 == null)) {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[6].Value = ((string)(終了時刻時));
+            }
+            if ((終了時刻分 == null)) {
+                command.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[7].Value = ((string)(終了時刻分));
+            }
+            if ((退出時刻時 == null)) {
+                command.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[8].Value = ((string)(退出時刻時));
+            }
+            if ((退出時刻分 == null)) {
+                command.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[9].Value = ((string)(退出時刻分));
+            }
+            if ((休憩.HasValue == true)) {
+                command.Parameters[10].Value = ((int)(休憩.Value));
+            }
+            else {
+                command.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            if ((普通残業.HasValue == true)) {
+                command.Parameters[11].Value = ((int)(普通残業.Value));
+            }
+            else {
+                command.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            if ((深夜残業.HasValue == true)) {
+                command.Parameters[12].Value = ((int)(深夜残業.Value));
+            }
+            else {
+                command.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            if ((休日出勤.HasValue == true)) {
+                command.Parameters[13].Value = ((int)(休日出勤.Value));
+            }
+            else {
+                command.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            if ((代休.HasValue == true)) {
+                command.Parameters[14].Value = ((int)(代休.Value));
+            }
+            else {
+                command.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            if ((休日.HasValue == true)) {
+                command.Parameters[15].Value = ((int)(休日.Value));
+            }
+            else {
+                command.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            if ((欠勤.HasValue == true)) {
+                command.Parameters[16].Value = ((int)(欠勤.Value));
+            }
+            else {
+                command.Parameters[16].Value = global::System.DBNull.Value;
+            }
+            if ((宿泊.HasValue == true)) {
+                command.Parameters[17].Value = ((int)(宿泊.Value));
+            }
+            else {
+                command.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            if ((備考 == null)) {
+                command.Parameters[18].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[18].Value = ((string)(備考));
+            }
+            if ((全走行.HasValue == true)) {
+                command.Parameters[19].Value = ((int)(全走行.Value));
+            }
+            else {
+                command.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            if ((通勤業務走行.HasValue == true)) {
+                command.Parameters[20].Value = ((int)(通勤業務走行.Value));
+            }
+            else {
+                command.Parameters[20].Value = global::System.DBNull.Value;
+            }
+            if ((私用走行.HasValue == true)) {
+                command.Parameters[21].Value = ((int)(私用走行.Value));
+            }
+            else {
+                command.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            if ((代休対象日 == null)) {
+                command.Parameters[22].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[22].Value = ((string)(代休対象日));
+            }
+            if ((登録年月日.HasValue == true)) {
+                command.Parameters[23].Value = ((System.DateTime)(登録年月日.Value));
+            }
+            else {
+                command.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            if ((登録ユーザーID.HasValue == true)) {
+                command.Parameters[24].Value = ((int)(登録ユーザーID.Value));
+            }
+            else {
+                command.Parameters[24].Value = global::System.DBNull.Value;
+            }
+            if ((更新年月日.HasValue == true)) {
+                command.Parameters[25].Value = ((System.DateTime)(更新年月日.Value));
+            }
+            else {
+                command.Parameters[25].Value = global::System.DBNull.Value;
+            }
+            if ((更新ユーザーID.HasValue == true)) {
+                command.Parameters[26].Value = ((int)(更新ユーザーID.Value));
+            }
+            else {
+                command.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            if ((早出残業.HasValue == true)) {
+                command.Parameters[27].Value = ((int)(早出残業.Value));
+            }
+            else {
+                command.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            if ((Original_日付.HasValue == true)) {
+                command.Parameters[28].Value = ((System.DateTime)(Original_日付.Value));
+            }
+            else {
+                command.Parameters[28].Value = global::System.DBNull.Value;
+            }
+            if ((Original_社員ID.HasValue == true)) {
+                command.Parameters[29].Value = ((int)(Original_社員ID.Value));
+            }
+            else {
+                command.Parameters[29].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int UpdateQueryChekMark(global::System.Nullable<int> 確認印, global::System.Nullable<global::System.DateTime> 更新年月日, global::System.Nullable<global::System.DateTime> Original_日付, global::System.Nullable<int> Original_社員ID) {
+            global::System.Data.OleDb.OleDbCommand command = this.CommandCollection[5];
+            if ((確認印.HasValue == true)) {
+                command.Parameters[0].Value = ((int)(確認印.Value));
+            }
+            else {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((更新年月日.HasValue == true)) {
+                command.Parameters[1].Value = ((System.DateTime)(更新年月日.Value));
+            }
+            else {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((Original_日付.HasValue == true)) {
+                command.Parameters[2].Value = ((System.DateTime)(Original_日付.Value));
+            }
+            else {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Original_社員ID.HasValue == true)) {
+                command.Parameters[3].Value = ((int)(Original_社員ID.Value));
+            }
+            else {
+                command.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
     }
     
     /// <summary>
@@ -9198,12 +9972,19 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[2];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ID, 氏名, フリガナ, 所属コード, 所属名, 人件費単価, 残業有無, 通し勤務単価, 基本給10, パスワード, アカウント権限, システム" +
                 "ユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日 FROM M_社員";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT ID, 氏名, フリガナ, 所属コード, 所属名, 人件費単価, 残業有無, 通し勤務単価, 基本給10, パスワード, アカウント権限, システム" +
+                "ユーザー区分, 走行起点, 走行起点日付, 退職年月日, 備考, 登録ユーザーID, 登録年月日, 更新ユーザーID, 更新年月日 FROM M_社員 wher" +
+                "e ID = ?";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.OleDb.OleDbParameter("ID", global::System.Data.OleDb.OleDbType.Integer, 0, global::System.Data.ParameterDirection.Input, ((byte)(0)), ((byte)(0)), "ID", global::System.Data.DataRowVersion.Current, false, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9225,6 +10006,42 @@ namespace ryowa_MailReceive.mailReceiveDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual mailReceiveDataSet.M_社員DataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            mailReceiveDataSet.M_社員DataTable dataTable = new mailReceiveDataSet.M_社員DataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBySCode(mailReceiveDataSet.M_社員DataTable dataTable, global::System.Nullable<int> ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual mailReceiveDataSet.M_社員DataTable GetDataBySCode(global::System.Nullable<int> ID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((ID.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(ID.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             mailReceiveDataSet.M_社員DataTable dataTable = new mailReceiveDataSet.M_社員DataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

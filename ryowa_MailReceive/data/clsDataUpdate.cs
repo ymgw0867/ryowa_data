@@ -14,8 +14,9 @@ namespace ryowa_MailReceive.data
     {
         public clsDataUpdate()
         {
-            adp.Fill(dts.T_勤怠);
-            sAdp.Fill(dts.M_社員);
+            //adp.Fill(dts.T_勤怠); // 2018/12/14 コメント化
+            //sAdp.Fill(dts.M_社員); // 2018/12/15 コメント化
+
             mAdp.Fill(dts.メール設定);
         }
 
@@ -26,7 +27,8 @@ namespace ryowa_MailReceive.data
         
         /// -------------------------------------------------------------------
         /// <summary>
-        ///     CSVファイルからT_勤怠の確認チェックを更新する </summary>
+        ///     CSVファイルからT_勤怠の確認チェックを更新する 
+        ///     : Update Queryに変更 2018/12/14</summary>
         /// <param name="_InPath">
         ///     CSVファイルパス</param>
         /// -------------------------------------------------------------------
@@ -73,25 +75,37 @@ namespace ryowa_MailReceive.data
                             continue;
                         }
 
-                        // 勤怠データ認証
-                        if (dts.T_勤怠.Any(a => a.日付 == DateTime.Parse(stCSV[1]) && a.社員ID == Utility.StrtoInt(stCSV[0])))
+                        // 勤怠データ認証 : 2018/12/14
+                        if (adp.FillByYYMMDDSCode(dts.T_勤怠, DateTime.Parse(stCSV[1]), Utility.StrtoInt(stCSV[0])) > 0)
                         {
-                            // 確認更新
-                            sCheckedMaster(stCSV);
+                            // 確認印欄が数字でないときは書き換えしない（既に確認印済で社員名表記の場合）：2018/12/14
+                            if (Utility.StrtoInt(stCSV[2]) != global.flgOff)
+                            {
+                                // 確認更新
+                                sCheckedMaster(stCSV);
+
+                                cnt++;
+                            }
                         }
 
-                        cnt++;
+                        // 2018/12/14 コメント化
+                        //if (dts.T_勤怠.Any(a => a.日付 == DateTime.Parse(stCSV[1]) && a.社員ID == Utility.StrtoInt(stCSV[0])))
+                        //{
+                        //    // 確認更新
+                        //    sCheckedMaster(stCSV);
+                        //}
                     }
 
                     // CSVファイル削除
                     System.IO.File.Delete(file);
                 }
 
-                // データベースへ反映
-                if (cnt > 0)
-                {
-                    adp.Update(dts.T_勤怠);
-                }
+                // 2018/12/14 コメント化
+                //// データベースへ反映
+                //if (cnt > 0)
+                //{
+                //    adp.Update(dts.T_勤怠);
+                //}
 
                 return cnt;
             }
@@ -158,29 +172,43 @@ namespace ryowa_MailReceive.data
                         }
 
                         // 勤怠データ認証
-                        if (dts.T_勤怠.Any(a => a.日付 == DateTime.Parse(stCSV[0]) && a.社員ID == Utility.StrtoInt(stCSV[1])))
+                        if (adp.FillByYYMMDDSCode(dts.T_勤怠, DateTime.Parse(stCSV[0]), Utility.StrtoInt(stCSV[1])) > 0)
                         {
-                            // 登録済みのとき：上書き更新
+                            // 登録済みのとき：上書き更新 UpdateQueryに変更 2018/12/14
                             sOverWriteMaster(stCSV);
+                            cnt++;
                         }
                         else
                         {
-                            // 勤怠データ追加登録
+                            // 勤怠データ追加登録 insertQueryに変更 2018/12/14
                             sAddMaster(stCSV);
+                            cnt++;
                         }
 
-                        cnt++;
+                        // 2018/12/14 コメント化
+                        //if (dts.T_勤怠.Any(a => a.日付 == DateTime.Parse(stCSV[0]) && a.社員ID == Utility.StrtoInt(stCSV[1])))
+                        //{
+                        //    // 登録済みのとき：上書き更新
+                        //    sOverWriteMaster(stCSV);
+                        //    cnt++;
+                        //}
+                        //else
+                        //{
+                        //    // 勤怠データ追加登録
+                        //    sAddMaster(stCSV);
+                        //    cnt++;
+                        //}
                     }
 
                     // CSVファイル削除
                     System.IO.File.Delete(file);
                 }
 
-                // データベースへ反映
-                if (cnt > 0)
-                {
-                    adp.Update(dts.T_勤怠);
-                }
+                //// データベースへ反映 : 2018/12/14 コメント化
+                //if (cnt > 0)
+                //{
+                //    adp.Update(dts.T_勤怠);
+                //}
 
                 return cnt;
             }
@@ -196,13 +224,14 @@ namespace ryowa_MailReceive.data
 
         /// -------------------------------------------------------------------
         /// <summary>
-        ///     出勤簿CSVファイルからT_勤怠を更新する </summary>
+        ///     リクエストの出勤簿・車両走行報告書エクセルシートを返信する </summary>
         /// <param name="_InPath">
         ///     CSVファイルパス</param>
         /// -------------------------------------------------------------------
         public int reqExcel(string _InPath, string fTitle)
         {
             int cnt = 0;
+            int sCnt = 0;
             string[] xlsArray = null;
             string toAdd = "";
 
@@ -226,6 +255,10 @@ namespace ryowa_MailReceive.data
                 // 添付ファイルをよむ
                 foreach (var file in System.IO.Directory.GetFiles(_InPath))
                 {
+                    // カウント・エクセルシート名配列を初期化：2018/12/14
+                    cnt = 0;
+                    xlsArray = null;
+
                     // 出勤簿要求ファイル以外はネグる
                     // ※受信時につけた添付ファイル名
                     if (!System.IO.Path.GetFileName(file).Contains(fTitle))
@@ -264,22 +297,23 @@ namespace ryowa_MailReceive.data
                             Array.Resize(ref xlsArray, cnt + 1);
                             xlsArray[cnt] = xlsFile;
                             toAdd = stCSV[3];
-                        }
 
-                        cnt++;
+                            cnt++;
+                        }
                     }
 
                     if (xlsArray != null)
                     {
                         // 出勤簿・車両走行報告書エクセルシート返信
                         sendXlsFile(toAdd, xlsArray);
+                        sCnt++;
                     }
 
                     // CSVファイル削除
                     System.IO.File.Delete(file);
                 }
 
-                return cnt;
+                return sCnt;
             }
             catch (Exception ex)
             {
@@ -293,7 +327,7 @@ namespace ryowa_MailReceive.data
 
         ///--------------------------------------------------------------------
         /// <summary>
-        ///     個人コード認証 </summary>
+        ///     個人コード認証 : FillBySCode に変更</summary>
         /// <param name="sNum">
         ///     認証する個人コード</param>
         /// <returns>
@@ -301,7 +335,16 @@ namespace ryowa_MailReceive.data
         ///--------------------------------------------------------------------
         private bool shainAuth(int sNum)
         {
-            if (dts.M_社員.Any(a => a.ID == sNum))
+            //if (dts.M_社員.Any(a => a.ID == sNum))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+
+            if (sAdp.FillBySCode(dts.M_社員, sNum) > 0)
             {
                 return true;
             }
@@ -310,42 +353,102 @@ namespace ryowa_MailReceive.data
                 return false;
             }
         }
-        
+
 
         /// ---------------------------------------------------------------
         /// <summary>
-        ///     勤怠データ追加 </summary>
+        ///     勤怠データ追加 : insertQueryに変更 2018/12/14</summary>
         /// <param name="c">
         ///     CSVデータ配列</param>
         /// ---------------------------------------------------------------
         private void sAddMaster(string[] c)
         {
-            mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.NewT_勤怠Row();
-            dts.T_勤怠.AddT_勤怠Row(setMasterRow(r, c));
+            //    mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.NewT_勤怠Row();
+            //    dts.T_勤怠.AddT_勤怠Row(setMasterRow(r, c));
+
+            // 2018/12/14
+            int hayade = 0;
+
+            // 早出残業：2018/07/13
+            if (c.Length > 36)
+            {
+                hayade = Utility.StrtoInt(c[36]);
+            }
+            else
+            {
+                hayade = 0;
+            }
+
+            adp.InsertQuery(DateTime.Parse(c[0]), Utility.StrtoInt(c[1]), Utility.StrtoInt(c[2]),
+                            Utility.StrtoInt(c[3]), c[4], c[5], c[6], c[7], c[8], c[9], c[10], c[11],
+                            Utility.StrtoInt(c[12]), Utility.StrtoInt(c[13]), Utility.StrtoInt(c[14]),
+                            Utility.StrtoInt(c[15]), Utility.StrtoInt(c[16]), Utility.StrtoInt(c[17]),
+                            Utility.StrtoInt(c[18]), Utility.StrtoInt(c[19]), c[20],
+                            global.flgOff, global.flgOff, global.flgOff, global.flgOff, global.flgOff,
+                            Utility.StrtoInt(c[26]), Utility.StrtoInt(c[27]), Utility.StrtoInt(c[28]), c[29],
+                            global.flgOff,
+                            DateTime.Parse(c[31]), Utility.StrtoInt(c[32]), DateTime.Parse(c[33]),
+                            Utility.StrtoInt(c[34]), hayade);
         }
 
         /// ---------------------------------------------------------------
         /// <summary>
-        ///     勤怠データ確認チェック更新 </summary>
+        ///     勤怠データ確認チェック更新 : updateQueryに変更 2018/12/14</summary>
         /// <param name="c">
         ///     CSVデータ配列</param>
         /// ---------------------------------------------------------------
         private void sCheckedMaster(string[] c)
         {
-            mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.Single(a => a.日付 == DateTime.Parse(c[1]) && a.社員ID == Utility.StrtoInt(c[0]));
-            setCheckedRow(r, c);
+            //mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.Single(a => a.日付 == DateTime.Parse(c[1]) && a.社員ID == Utility.StrtoInt(c[0]));
+            //setCheckedRow(r, c);
+            
+            adp.UpdateQueryChekMark(Utility.StrtoInt(c[2]), DateTime.Now, DateTime.Parse(c[1]), Utility.StrtoInt(c[0]));
         }
 
         /// ---------------------------------------------------------------
         /// <summary>
-        ///     勤怠データ上書き </summary>
+        ///     勤怠データ上書き : UpdateQueryに変更 2018/12/14</summary>
         /// <param name="c">
         ///     CSVデータ配列</param>
         /// ---------------------------------------------------------------
         private void sOverWriteMaster(string[] c)
         {
-            mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.Single(a => a.日付 == DateTime.Parse(c[0]) && a.社員ID == Utility.StrtoInt(c[1]));
-            setMasterRow(r, c);
+            //mailReceiveDataSet.T_勤怠Row r = dts.T_勤怠.Single(a => a.日付 == DateTime.Parse(c[0]) && a.社員ID == Utility.StrtoInt(c[1]));
+            //setMasterRow(r, c);
+
+            // 2018/12/14
+            int hayade = 0;
+
+            // 早出残業：2018/07/13
+            if (c.Length > 36)
+            {
+                hayade = Utility.StrtoInt(c[36]);
+            }
+            else
+            {
+                hayade = 0;
+            }
+
+            // 2018/12/14
+            adp.UpdateQuery(Utility.StrtoInt(c[2]),
+                            Utility.StrtoInt(c[3]), c[4], c[5], c[6], c[7], c[8], c[9], c[10], c[11],
+                            Utility.StrtoInt(c[12]), Utility.StrtoInt(c[13]), Utility.StrtoInt(c[14]),
+                            Utility.StrtoInt(c[15]), Utility.StrtoInt(c[16]), Utility.StrtoInt(c[17]),
+                            Utility.StrtoInt(c[18]), Utility.StrtoInt(c[19]), c[20],
+
+                            // ローカルデータから特殊勤務チェックしないので更新対象外
+                            //r.除雪当番 = Utility.StrtoInt(c[21]);
+                            //r.特殊出勤 = Utility.StrtoInt(c[22]);
+                            //r.通し勤務 = Utility.StrtoInt(c[23]);
+                            //r.夜間手当 = Utility.StrtoInt(c[24]);
+                            //r.職務手当 = Utility.StrtoInt(c[25]);
+
+                            Utility.StrtoInt(c[26]), Utility.StrtoInt(c[27]), Utility.StrtoInt(c[28]), c[29],
+
+                            //r.確認印 = Utility.StrtoInt(c[30]);  // ローカルデータから確認印チェックしないので更新対象外
+
+                            DateTime.Parse(c[31]), Utility.StrtoInt(c[32]), DateTime.Parse(c[33]),
+                            Utility.StrtoInt(c[34]), hayade, DateTime.Parse(c[0]), Utility.StrtoInt(c[1]));
         }
 
         /// ----------------------------------------------------------------------------
@@ -729,8 +832,9 @@ namespace ryowa_MailReceive.data
             mailReceiveDataSetTableAdapters.M_工事TableAdapter pAdp = new mailReceiveDataSetTableAdapters.M_工事TableAdapter();
 
             // 勤怠テーブル読み込み
-            adp.Fill(dts.T_勤怠);
-            sAdp.Fill(dts.M_社員);
+            //adp.Fill(dts.T_勤怠);  // 該当社員に絞り込み可能　2018/12/05
+            adp.FillBySCode(dts.T_勤怠, pNum);  // 該当社員に絞り込み 2018/12/14
+            //sAdp.Fill(dts.M_社員);　// 2018/12/15 コメント化
             hAdp.Fill(dts.M_休日);
             pAdp.Fill(dts.M_工事);
 
@@ -917,7 +1021,7 @@ namespace ryowa_MailReceive.data
                             oxlsPrintSheet.Cells[eRow, 12] = string.Empty;
                         }
 
-                        oxlsPrintSheet.Cells[eRow, 14] = getKmAll(pNum, sDt);
+                        oxlsPrintSheet.Cells[eRow, 14] = getKmAll(dts, pNum, sDt);　// 2018/12/15
                         oxlsPrintSheet.Cells[eRow, 15] = t.通勤業務走行.ToString();
                         oxlsPrintSheet.Cells[eRow, 16] = t.私用走行.ToString();
 
@@ -926,8 +1030,21 @@ namespace ryowa_MailReceive.data
                         {
                             //oxlsPrintSheet.Cells[eRow, 17] = "✔";
 
+                            // 2018/12/15 以下、コメント化
+                            //// 確認欄に社員名を表示 : 2016/04/08
+                            //if (dts.M_社員.Any(a => a.ID == t.確認印))
+                            //{
+                            //    var s = dts.M_社員.Single(a => a.ID == t.確認印);
+                            //    oxlsPrintSheet.Cells[eRow, 17] = s.氏名;
+                            //}
+                            //else
+                            //{
+                            //    oxlsPrintSheet.Cells[eRow, 17] = "";
+                            //}
+
                             // 確認欄に社員名を表示 : 2016/04/08
-                            if (dts.M_社員.Any(a => a.ID == t.確認印))
+                            // FillBySCodeに変更：2018/12/15
+                            if (sAdp.FillBySCode(dts.M_社員, t.確認印) > 0)
                             {
                                 var s = dts.M_社員.Single(a => a.ID == t.確認印);
                                 oxlsPrintSheet.Cells[eRow, 17] = s.氏名;
@@ -1034,12 +1151,12 @@ namespace ryowa_MailReceive.data
                     int sYY = pYY;  // 和暦から西暦へ 2018/07/13
                     DateTime dt2 = DateTime.Parse(sYY.ToString() + "/" + pMM.ToString() + "/01");
                     dt2 = dt.AddMonths(1).AddDays(-1);
-                    oxlsPrintSheet.Cells[39, 15] = getKmAll(pNum, dt);
+                    oxlsPrintSheet.Cells[39, 15] = getKmAll(dts, pNum, dt); // 2018/12/15
 
                     // 前月末走行距離
                     dt = dt.AddMonths(-1);
-                    oxlsPrintSheet.Cells[40, 15] = getKmAll(pNum, dt);
-                    
+                    oxlsPrintSheet.Cells[40, 15] = getKmAll(dts, pNum, dt); // 2018/12/15
+
                     // 確認のためのウィンドウを表示する
                     //oXls.Visible = true;
 
@@ -1124,14 +1241,34 @@ namespace ryowa_MailReceive.data
         /// <returns>
         ///     当日までの走行距離</returns>
         ///-------------------------------------------------------------------------
-        private int getKmAll(int sNum, DateTime dt)
+        private int getKmAll(mailReceiveDataSet dts, int sNum, DateTime dt)　
         {
             int sKm = 0;
             DateTime kDt = DateTime.Parse("1900/01/01");
 
-            if (dts.M_社員.Any(a => a.ID == sNum))
+            //if (dts.M_社員.Any(a => a.ID == sNum))
+            //{
+            //    var s = dts.M_社員.Single(a => a.ID == sNum);
+            //    if (!s.Is走行起点Null())
+            //    {
+            //        sKm = s.走行起点;
+
+            //        if (s.走行起点日付 != null && s.走行起点日付 != string.Empty)
+            //        {
+            //            kDt = DateTime.Parse(s.走行起点日付);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        sKm = 0;
+            //    }
+            //}
+
+            // FillBySCodeに変更：2018/12/15
+            if (sAdp.FillBySCode(dts.M_社員, sNum) > 0)
             {
                 var s = dts.M_社員.Single(a => a.ID == sNum);
+
                 if (!s.Is走行起点Null())
                 {
                     sKm = s.走行起点;
@@ -1146,6 +1283,7 @@ namespace ryowa_MailReceive.data
                     sKm = 0;
                 }
             }
+
 
             if (dt < kDt)
             {
