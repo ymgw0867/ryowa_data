@@ -904,8 +904,9 @@ namespace ryowa_Kintai.common
                 spanMin += Utility.GetTimeSpan(stTM, edTM).TotalMinutes;
             }
 
-            // 休憩時間を差し引く
-            int rTM = Properties.Settings.Default.restTime + item.休憩;
+            // 休憩時間を差し引く : 休日出勤時の休憩時間 2時間マイナスしない 2019/01/04
+            //int rTM = Properties.Settings.Default.restTime + item.休憩;  // 2019/01/04コメント化
+            int rTM = item.休憩;  //  休日出勤時の休憩時間 2時間マイナスしない 2019/01/04
             if (spanMin > rTM)
             {
                 spanMin -= rTM;

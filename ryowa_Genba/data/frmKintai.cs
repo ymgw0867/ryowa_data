@@ -303,6 +303,26 @@ namespace ryowa_Genba.data
             chkStay.Enabled = true;     // 宿泊           
             txtMemo.Enabled = true;     // 所定時間内で処理できない業務内容・他 特記事項            
             panel4.Enabled = true;      // 走行距離
+
+            // 休日出勤時の特殊勤務欄をロックしない 2019/01/04   
+            if (rBtnHolWork.Checked)
+            {
+                panel2.Enabled = true;
+                chkJyosetsu.Enabled = false;
+                chkTokushu.Enabled = true;
+                chkTooshi.Enabled = false;
+                chkYakan.Enabled = false;
+                chkShokumu.Enabled = false;
+            }
+            else if (rBtnWork.Checked)
+            {
+                panel2.Enabled = true;
+                chkJyosetsu.Enabled = true;
+                chkTokushu.Enabled = true;
+                chkTooshi.Enabled = true;
+                chkYakan.Enabled = true;
+                chkShokumu.Enabled = true;
+            }
         }
 
         private void holidayInitial()

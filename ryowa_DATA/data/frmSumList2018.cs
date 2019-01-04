@@ -387,10 +387,19 @@ namespace ryowa_DATA.data
                         cs.sArray[0].sGanbaDays = global.flgOff;
                     }
 
-                    // 勤務地日数
+                    // 勤務地日数 : 上限を21.6日とする  2019/01/04
                     if (kKbn != global.flgOff)
                     {
-                        cs.sArray[0].sKinmuchiDays = j.cnt;
+                        if (j.cnt > Properties.Settings.Default.tempdays)
+                        {
+                            cs.sArray[0].sKinmuchiDays = Properties.Settings.Default.tempdays;
+                        }
+                        else
+                        {
+                            cs.sArray[0].sKinmuchiDays = j.cnt;
+                        }
+
+                        //cs.sArray[0].sKinmuchiDays = j.cnt;
                     }
                     else
                     {
@@ -961,7 +970,26 @@ namespace ryowa_DATA.data
             g[cJinkenhi, r].Value = sd[i].sJinkanhi.ToString("#,##0");  // 人件費
             g[cHaichiDays, r].Value = sd[i].sHaichiDays.ToString("#,##0.0");     // 配置日数
             g[cGenbaDays, r].Value = sd[i].sGanbaDays.ToString("#,###");       // 現場日数
-            g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays.ToString("#,###"); // 勤務地
+
+            if (i == 1)
+            {
+                // 勤務地 : 上限を21.6日とする 2019/01/04
+                if (sd[i].sKinmuchiDays > Properties.Settings.Default.tempdays)
+                {
+                    g[cKinmuchiDays, r].Value = Properties.Settings.Default.tempdays;
+                }
+                else if (sd[i].sKinmuchiDays > 0)
+                {
+                    g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays; // 勤務地
+                }
+            }
+            else
+            {
+                g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays.ToString("#,###.#"); // 勤務地
+            }
+
+            //g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays.ToString("#,###.#"); // 勤務地
+
             g[cStayDays, r].Value = sd[i].sStayDays.ToString("#,###");     // 宿泊
 
             // 休日勤務時間

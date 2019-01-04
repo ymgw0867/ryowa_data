@@ -93,7 +93,7 @@ namespace ryowa_DATA.data
             public int sJinkanhi { get; set; }
             public decimal sHaichiDays { get; set; }
             public int sGanbaDays { get; set; }
-            public int sKinmuchiDays { get; set; }
+            public decimal sKinmuchiDays { get; set; }
             public int sStayDays { get; set; }
             public int sHolTM { get; set; }
             public int sHouteiTM { get; set; }

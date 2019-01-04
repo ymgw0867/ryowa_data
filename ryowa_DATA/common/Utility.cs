@@ -778,8 +778,8 @@ namespace ryowa_DATA.common
 
             foreach (var item in ff)
             {
-                // 勤務時間を取得する
-                double spanMin = getWorkTime(item);
+                // 勤務時間を取得する : 2019/01/04
+                double spanMin = getWorkTime(item, false);
 
                 if (item.M_休日Row.法定休日 == global.flgOff)
                 {
@@ -826,8 +826,8 @@ namespace ryowa_DATA.common
 
             foreach (var item in ff)
             {
-                // 勤務時間を取得する
-                double spanMin = getWorkTime(item);
+                // 勤務時間を取得する : 2019/01/04
+                double spanMin = getWorkTime(item, false);
 
                 if (item.M_休日Row.法定休日 == global.flgOff)
                 {
@@ -849,10 +849,12 @@ namespace ryowa_DATA.common
         ///     勤務時間を取得する </summary>
         /// <param name="item">
         ///     ryowaDataSet.T_勤怠Row </param>
+        /// <param name="restTm">
+        ///     休憩時間2時間マイナス</param>
         /// <returns>
         ///     勤務時間・分</returns>
         ///-----------------------------------------------------------------------------
-        public static double getWorkTime(ryowaDataSet.T_勤怠Row item)
+        public static double getWorkTime(ryowaDataSet.T_勤怠Row item, bool restTm)
         {
             int cSH = Utility.StrtoInt(item.開始時刻時);
             int cSM = Utility.StrtoInt(item.開始時刻分);
@@ -884,8 +886,16 @@ namespace ryowa_DATA.common
                 spanMin += Utility.GetTimeSpan(stTM, edTM).TotalMinutes;
             }
 
-            // 休憩時間を差し引く
-            int rTM = Properties.Settings.Default.restTime + item.休憩;
+            // 2019/01/04
+            int rTM = item.休憩;
+
+            // 2019/01/04
+            if (restTm)
+            {
+                // 2時間の休憩時間を差し引く
+                rTM += Properties.Settings.Default.restTime;
+            }
+
             if (spanMin > rTM)
             {
                 spanMin -= rTM;
@@ -982,8 +992,8 @@ namespace ryowa_DATA.common
 
             var s = dts.T_勤怠.Single(a => a.日付 == dt && a.社員ID == sNum);
 
-            // 勤務時間を取得する
-            double spanMin = Utility.getWorkTime(s);
+            // 勤務時間を取得する : 2019/01/04
+            double spanMin = Utility.getWorkTime(s, false);
             return (int)spanMin;
         }
 

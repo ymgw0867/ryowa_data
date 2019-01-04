@@ -427,8 +427,8 @@ namespace ryowa_DATA.data
 
             var s = dts.T_勤怠.Single(a => a.日付 == dt && a.社員ID == sNum);
 
-            // 勤務時間を取得する
-            double spanMin = Utility.getWorkTime(s);
+            // 勤務時間を取得する : 2019/01/04
+            double spanMin = Utility.getWorkTime(s, false);
             return (int)spanMin;
         }
 
@@ -509,8 +509,8 @@ namespace ryowa_DATA.data
 
             foreach (var t in s)
             {
-                // 勤務時間を取得する
-                if (Utility.getWorkTime(t) < 240)
+                // 勤務時間を取得する : 2019/01/04
+                if (Utility.getWorkTime(t, true) < 240)
                 {
                     tt += tToku1;   // 4.0時間／日 未満
                 }

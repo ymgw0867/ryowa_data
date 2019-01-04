@@ -339,7 +339,8 @@ namespace ryowa_DATA.master
             if (txtMemo2.Text != string.Empty && !dts.M_休日.Any(a => a.日付 == dt && a.RowState != DataRowState.Deleted && a.RowState != DataRowState.Detached))
             {
                 var d = dts.M_休日.NewM_休日Row();
-                d.日付 = dt;
+                //d.日付 = dt; // 2019/01/04
+                d.日付 = DateTime.Parse(dt.ToShortDateString());
                 d.曜日 = (int)dt.DayOfWeek;
 
                 if (d.曜日 == C_SUNDAY)

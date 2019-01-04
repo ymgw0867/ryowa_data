@@ -801,15 +801,19 @@ namespace ryowa_Genba.common
                 // 勤務時間を取得する
                 double spanMin = getWorkTime(item);
 
-                if (item.M_休日Row.法定休日 == global.flgOff)
+                // 2019/01/04
+                if (item.M_休日Row != null)
                 {
-                    // 休日出勤
-                    hol += (int)spanMin;
-                }
-                else
-                {
-                    // 法定休日勤務
-                    hotei += (int)spanMin;
+                    if (item.M_休日Row.法定休日 == global.flgOff)
+                    {
+                        // 休日出勤
+                        hol += (int)spanMin;
+                    }
+                    else
+                    {
+                        // 法定休日勤務
+                        hotei += (int)spanMin;
+                    }
                 }
             }
 
@@ -904,8 +908,9 @@ namespace ryowa_Genba.common
                 spanMin += Utility.GetTimeSpan(stTM, edTM).TotalMinutes;
             }
 
-            // 休憩時間を差し引く
-            int rTM = Properties.Settings.Default.restTime + item.休憩;
+            // 休憩時間を差し引く　：休日出勤時の休憩時間 2時間マイナスする処理を行わない　2019/01/04
+            //int rTM = Properties.Settings.Default.restTime + item.休憩; // 2019/01/04 コメント化
+            int rTM = item.休憩;
             if (spanMin > rTM)
             {
                 spanMin -= rTM;
