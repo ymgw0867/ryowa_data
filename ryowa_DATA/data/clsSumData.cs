@@ -103,7 +103,7 @@ namespace ryowa_DATA.data
             public int sTokushu { get; set; }
             public int sTooshi { get; set; }
             public int sYakan { get; set; }
-            public int sShokumu { get; set; }
+            public decimal sShokumu { get; set; }
         }
     }
 }

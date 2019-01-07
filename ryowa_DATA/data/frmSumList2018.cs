@@ -446,7 +446,17 @@ namespace ryowa_DATA.data
                     cs.sArray[0].sTokushu = j.tokushu;      // 特殊勤務
                     cs.sArray[0].sTooshi = j.tooshi;        // 通し勤務
                     cs.sArray[0].sYakan = j.yakan;          // 夜間手当
-                    cs.sArray[0].sShokumu = j.shokumu;      // 職務手当 
+
+                    // 2019/01/07 職務手当の上限日数は21.6日とする
+                    //cs.sArray[0].sShokumu = j.shokumu;      // 職務手当  2019/01/07 コメント化
+                    if (j.shokumu > Properties.Settings.Default.tempdays)
+                    {
+                        cs.sArray[0].sShokumu = Properties.Settings.Default.tempdays;
+                    }
+                    else
+                    {
+                        cs.sArray[0].sShokumu = j.shokumu;
+                    }
 
                     // 集計行の値加算
                     for (int i = 1; i < cs.sArray.Length; i++)
@@ -1032,11 +1042,11 @@ namespace ryowa_DATA.data
                 g[cSiTM, r].Value = global.FLGOFF;
             }
 
-            g[cJyosetsu, r].Value = sd[i].sJyosetsu.ToString("#,###");     // 除雪手当
-            g[cTokushu, r].Value = sd[i].sTokushu.ToString("#,###");       // 特殊勤務
-            g[cTooshi, r].Value = sd[i].sTooshi.ToString("#,###");         // 通し勤務
-            g[cYakan, r].Value = sd[i].sYakan.ToString("#,###");           // 夜間手当
-            g[cShokumu, r].Value = sd[i].sShokumu.ToString("#,###");       // 職務手当
+            g[cJyosetsu, r].Value = sd[i].sJyosetsu.ToString("#,###");      // 除雪手当
+            g[cTokushu, r].Value = sd[i].sTokushu.ToString("#,###");        // 特殊勤務
+            g[cTooshi, r].Value = sd[i].sTooshi.ToString("#,###");          // 通し勤務
+            g[cYakan, r].Value = sd[i].sYakan.ToString("#,###");            // 夜間手当
+            g[cShokumu, r].Value = sd[i].sShokumu.ToString("#,###.#");      // 職務手当 2019/01/07 書式変更
 
             // 集計行のとき
             if (i > 0)

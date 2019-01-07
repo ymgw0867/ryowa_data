@@ -107,7 +107,7 @@ namespace ryowa_DATA.data
                 int sJyo = 0;
                 int sTooshi = 0; 
                 int sYakan = 0; 
-                int sShokushu = 0;
+                decimal sShokushu = 0;
                 int sZanStatus = 0; // 残業有無
                 int sGenbaKbn = 0;  // 現場手当有無 2018/09/11
                 double fZan = 0;    // 固定残業時間 2018/09/21
@@ -294,7 +294,7 @@ namespace ryowa_DATA.data
 
                 wd[iX].tooshiNum = sTooshi;     // 通し勤務数
                 wd[iX].yakanNum = sYakan;       // 夜間手当数
-                wd[iX].shokumuNum = sShokushu;  // 職務手当数
+                wd[iX].shokumuNum = sShokushu;  // 職務手当日数
 
                 iX++;
             }
@@ -450,7 +450,7 @@ namespace ryowa_DATA.data
         /// <returns>
         ///     その他支給2金額</returns>
         ///----------------------------------------------------------------------
-        private int getSonotaT(int sNum, int tooshi, out int sJyo, out int sTooshi, out int sYakan, out int sShokumu)
+        private int getSonotaT(int sNum, int tooshi, out int sJyo, out int sTooshi, out int sYakan, out decimal sShokumu)
         {
             int sonotaT = 0;
 
@@ -479,6 +479,12 @@ namespace ryowa_DATA.data
             sShokumu = dts.T_勤怠.Count(a => a.日付.Year == _sYY && a.日付.Month == _sMM && a.社員ID == sNum &&
                         a.職務手当 == global.flgOn);
 
+            // 職務手当日数は上限を21.6日とする 2019/01/09
+            if (sShokumu > Properties.Settings.Default.tempdays)
+            {
+                sShokumu = Properties.Settings.Default.tempdays;
+            }
+
             // 職務手当は最大15,000円／月
             if ((sShokumu * tShokumu) > 15000)
             {
@@ -486,7 +492,7 @@ namespace ryowa_DATA.data
             }
             else
             {
-                sonotaT += sShokumu * tShokumu;
+                sonotaT += (int)(sShokumu * tShokumu);  // 2019/01/07
             }
 
             return sonotaT;
@@ -707,7 +713,7 @@ namespace ryowa_DATA.data
             public int tokushuNum { get; set; }     // 特殊出勤日数
             public int tooshiNum { get; set; }      // 通し勤務日数
             public int yakanNum { get; set; }       // 夜間手当日数
-            public int shokumuNum { get; set; }     // 職務手当日数
+            public decimal shokumuNum { get; set; }     // 職務手当日数
         }
     }
 }
