@@ -1374,7 +1374,12 @@ namespace ryowa_Genba.data
             sb.Append(s.休日.ToString()).Append(",");
             sb.Append(s.欠勤.ToString()).Append(",");
             sb.Append(s.宿泊.ToString()).Append(",");
-            sb.Append(s.備考.Replace(",", "")).Append(",");
+
+            //sb.Append(s.備考.Replace(",", "")).Append(",");　　2019/01/11 コメント化
+
+            // 備考文字列から改行文字を除去 2019/01/11
+            sb.Append(s.備考.Replace(",", "").Replace("\r", "").Replace("\n", "")).Append(",");
+
             sb.Append(s.除雪当番.ToString()).Append(",");
             sb.Append(s.特殊出勤.ToString()).Append(",");
             sb.Append(s.通し勤務.ToString()).Append(",");
