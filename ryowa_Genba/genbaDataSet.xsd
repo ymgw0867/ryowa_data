@@ -907,7 +907,7 @@
   <xs:element name="genbaDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="genbaDataSet" msprop:Generator_UserDSName="genbaDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="M_休日" msprop:Generator_TableClassName="M_休日DataTable" msprop:Generator_TableVarName="tableM_休日" msprop:Generator_TablePropName="M_休日" msprop:Generator_RowDeletingName="M_休日RowDeleting" msprop:Generator_RowChangingName="M_休日RowChanging" msprop:Generator_RowEvHandlerName="M_休日RowChangeEventHandler" msprop:Generator_RowDeletedName="M_休日RowDeleted" msprop:Generator_UserTableName="M_休日" msprop:Generator_RowChangedName="M_休日RowChanged" msprop:Generator_RowEvArgName="M_休日RowChangeEvent" msprop:Generator_RowClassName="M_休日Row">
+        <xs:element name="M_休日" msprop:Generator_TableClassName="M_休日DataTable" msprop:Generator_TableVarName="tableM_休日" msprop:Generator_RowChangedName="M_休日RowChanged" msprop:Generator_TablePropName="M_休日" msprop:Generator_RowDeletingName="M_休日RowDeleting" msprop:Generator_RowChangingName="M_休日RowChanging" msprop:Generator_RowEvHandlerName="M_休日RowChangeEventHandler" msprop:Generator_RowDeletedName="M_休日RowDeleted" msprop:Generator_RowClassName="M_休日Row" msprop:Generator_UserTableName="M_休日" msprop:Generator_RowEvArgName="M_休日RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -928,7 +928,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="T_勤怠" msprop:Generator_TableClassName="T_勤怠DataTable" msprop:Generator_TableVarName="tableT_勤怠" msprop:Generator_TablePropName="T_勤怠" msprop:Generator_RowDeletingName="T_勤怠RowDeleting" msprop:Generator_RowChangingName="T_勤怠RowChanging" msprop:Generator_RowEvHandlerName="T_勤怠RowChangeEventHandler" msprop:Generator_RowDeletedName="T_勤怠RowDeleted" msprop:Generator_UserTableName="T_勤怠" msprop:Generator_RowChangedName="T_勤怠RowChanged" msprop:Generator_RowEvArgName="T_勤怠RowChangeEvent" msprop:Generator_RowClassName="T_勤怠Row">
+        <xs:element name="T_勤怠" msprop:Generator_TableClassName="T_勤怠DataTable" msprop:Generator_TableVarName="tableT_勤怠" msprop:Generator_RowChangedName="T_勤怠RowChanged" msprop:Generator_TablePropName="T_勤怠" msprop:Generator_RowDeletingName="T_勤怠RowDeleting" msprop:Generator_RowChangingName="T_勤怠RowChanging" msprop:Generator_RowEvHandlerName="T_勤怠RowChangeEventHandler" msprop:Generator_RowDeletedName="T_勤怠RowDeleted" msprop:Generator_RowClassName="T_勤怠Row" msprop:Generator_UserTableName="T_勤怠" msprop:Generator_RowEvArgName="T_勤怠RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -1031,7 +1031,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="M_工事" msprop:Generator_TableClassName="M_工事DataTable" msprop:Generator_TableVarName="tableM_工事" msprop:Generator_TablePropName="M_工事" msprop:Generator_RowDeletingName="M_工事RowDeleting" msprop:Generator_RowChangingName="M_工事RowChanging" msprop:Generator_RowEvHandlerName="M_工事RowChangeEventHandler" msprop:Generator_RowDeletedName="M_工事RowDeleted" msprop:Generator_UserTableName="M_工事" msprop:Generator_RowChangedName="M_工事RowChanged" msprop:Generator_RowEvArgName="M_工事RowChangeEvent" msprop:Generator_RowClassName="M_工事Row">
+        <xs:element name="M_工事" msprop:Generator_TableClassName="M_工事DataTable" msprop:Generator_TableVarName="tableM_工事" msprop:Generator_RowChangedName="M_工事RowChanged" msprop:Generator_TablePropName="M_工事" msprop:Generator_RowDeletingName="M_工事RowDeleting" msprop:Generator_RowChangingName="M_工事RowChanging" msprop:Generator_RowEvHandlerName="M_工事RowChangeEventHandler" msprop:Generator_RowDeletedName="M_工事RowDeleted" msprop:Generator_RowClassName="M_工事Row" msprop:Generator_UserTableName="M_工事" msprop:Generator_RowEvArgName="M_工事RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -1062,7 +1062,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="M_社員" msprop:Generator_TableClassName="M_社員DataTable" msprop:Generator_TableVarName="tableM_社員" msprop:Generator_TablePropName="M_社員" msprop:Generator_RowDeletingName="M_社員RowDeleting" msprop:Generator_RowChangingName="M_社員RowChanging" msprop:Generator_RowEvHandlerName="M_社員RowChangeEventHandler" msprop:Generator_RowDeletedName="M_社員RowDeleted" msprop:Generator_UserTableName="M_社員" msprop:Generator_RowChangedName="M_社員RowChanged" msprop:Generator_RowEvArgName="M_社員RowChangeEvent" msprop:Generator_RowClassName="M_社員Row">
+        <xs:element name="M_社員" msprop:Generator_TableClassName="M_社員DataTable" msprop:Generator_TableVarName="tableM_社員" msprop:Generator_RowChangedName="M_社員RowChanged" msprop:Generator_TablePropName="M_社員" msprop:Generator_RowDeletingName="M_社員RowDeleting" msprop:Generator_RowChangingName="M_社員RowChanging" msprop:Generator_RowEvHandlerName="M_社員RowChangeEventHandler" msprop:Generator_RowDeletedName="M_社員RowDeleted" msprop:Generator_RowClassName="M_社員Row" msprop:Generator_UserTableName="M_社員" msprop:Generator_RowEvArgName="M_社員RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -1132,7 +1132,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="メール設定" msprop:Generator_TableClassName="メール設定DataTable" msprop:Generator_TableVarName="tableメール設定" msprop:Generator_TablePropName="メール設定" msprop:Generator_RowDeletingName="メール設定RowDeleting" msprop:Generator_RowChangingName="メール設定RowChanging" msprop:Generator_RowEvHandlerName="メール設定RowChangeEventHandler" msprop:Generator_RowDeletedName="メール設定RowDeleted" msprop:Generator_UserTableName="メール設定" msprop:Generator_RowChangedName="メール設定RowChanged" msprop:Generator_RowEvArgName="メール設定RowChangeEvent" msprop:Generator_RowClassName="メール設定Row">
+        <xs:element name="メール設定" msprop:Generator_TableClassName="メール設定DataTable" msprop:Generator_TableVarName="tableメール設定" msprop:Generator_RowChangedName="メール設定RowChanged" msprop:Generator_TablePropName="メール設定" msprop:Generator_RowDeletingName="メール設定RowDeleting" msprop:Generator_RowChangingName="メール設定RowChanging" msprop:Generator_RowEvHandlerName="メール設定RowChangeEventHandler" msprop:Generator_RowDeletedName="メール設定RowDeleted" msprop:Generator_RowClassName="メール設定Row" msprop:Generator_UserTableName="メール設定" msprop:Generator_RowEvArgName="メール設定RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
@@ -1207,11 +1207,11 @@
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="M_休日_T_勤怠" msdata:parent="M_休日" msdata:child="T_勤怠" msdata:parentkey="日付" msdata:childkey="日付" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠Rows" msprop:Generator_UserRelationName="M_休日_T_勤怠" msprop:Generator_ParentPropName="M_休日Row" msprop:Generator_RelationVarName="relationM_休日_T_勤怠" msprop:Generator_UserParentTable="M_休日" />
-      <msdata:Relationship name="M_工事_T_勤怠" msdata:parent="M_工事" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="工事ID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠Rows" msprop:Generator_UserRelationName="M_工事_T_勤怠" msprop:Generator_RelationVarName="relationM_工事_T_勤怠" msprop:Generator_UserParentTable="M_工事" msprop:Generator_ParentPropName="M_工事Row" />
-      <msdata:Relationship name="M_社員_T_勤怠" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="社員ID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠" msprop:Generator_UserRelationName="M_社員_T_勤怠" msprop:Generator_RelationVarName="relationM_社員_T_勤怠" msprop:Generator_UserParentTable="M_社員" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠" />
-      <msdata:Relationship name="M_社員_T_勤怠1" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="登録ユーザーID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠1" msprop:Generator_UserRelationName="M_社員_T_勤怠1" msprop:Generator_RelationVarName="relationM_社員_T_勤怠1" msprop:Generator_UserParentTable="M_社員" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠1" />
-      <msdata:Relationship name="M_社員_T_勤怠2" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="更新ユーザーID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠2" msprop:Generator_UserRelationName="M_社員_T_勤怠2" msprop:Generator_RelationVarName="relationM_社員_T_勤怠2" msprop:Generator_UserParentTable="M_社員" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠2" />
+      <msdata:Relationship name="M_休日_T_勤怠" msdata:parent="M_休日" msdata:child="T_勤怠" msdata:parentkey="日付" msdata:childkey="日付" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠Rows" msprop:Generator_UserRelationName="M_休日_T_勤怠" msprop:Generator_RelationVarName="relationM_休日_T_勤怠" msprop:Generator_UserParentTable="M_休日" msprop:Generator_ParentPropName="M_休日Row" />
+      <msdata:Relationship name="M_工事_T_勤怠" msdata:parent="M_工事" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="工事ID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠Rows" msprop:Generator_UserRelationName="M_工事_T_勤怠" msprop:Generator_ParentPropName="M_工事Row" msprop:Generator_RelationVarName="relationM_工事_T_勤怠" msprop:Generator_UserParentTable="M_工事" />
+      <msdata:Relationship name="M_社員_T_勤怠" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="社員ID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠" msprop:Generator_UserRelationName="M_社員_T_勤怠" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠" msprop:Generator_RelationVarName="relationM_社員_T_勤怠" msprop:Generator_UserParentTable="M_社員" />
+      <msdata:Relationship name="M_社員_T_勤怠1" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="登録ユーザーID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠1" msprop:Generator_UserRelationName="M_社員_T_勤怠1" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠1" msprop:Generator_RelationVarName="relationM_社員_T_勤怠1" msprop:Generator_UserParentTable="M_社員" />
+      <msdata:Relationship name="M_社員_T_勤怠2" msdata:parent="M_社員" msdata:child="T_勤怠" msdata:parentkey="ID" msdata:childkey="更新ユーザーID" msprop:Generator_UserChildTable="T_勤怠" msprop:Generator_ChildPropName="GetT_勤怠RowsByM_社員_T_勤怠2" msprop:Generator_UserRelationName="M_社員_T_勤怠2" msprop:Generator_ParentPropName="M_社員RowByM_社員_T_勤怠2" msprop:Generator_RelationVarName="relationM_社員_T_勤怠2" msprop:Generator_UserParentTable="M_社員" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

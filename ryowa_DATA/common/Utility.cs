@@ -1022,7 +1022,8 @@ namespace ryowa_DATA.common
             }
             catch (Exception e)
             {
-                MessageBox.Show("MDB最適化中" + Environment.NewLine + e.Message, "エラー", MessageBoxButtons.OK);
+                // 2019/01/11 コメント化：エラーのときは何もしない
+                //MessageBox.Show("MDB最適化中" + Environment.NewLine + e.Message, "エラー", MessageBoxButtons.OK);
             }
         }
     }

@@ -17,8 +17,11 @@ namespace ryowa_Genba.data
         {
             InitializeComponent();
 
-            // 勤怠データ
-            kAdp.FillByYYMM(dts.T_勤怠, pDt.Year, pDt.Month);
+            // 勤怠データ // 2019/01/25 コメント化
+            //kAdp.FillByYYMM(dts.T_勤怠, pDt.Year, pDt.Month);
+
+            //// 勤怠データ : 社員で抽出 2019/01/25
+            kAdp.FillBySCode(dts.T_勤怠, pNum);
 
             // 休日設定読み込み
             hAdp.Fill(dts.M_休日);
@@ -41,7 +44,9 @@ namespace ryowa_Genba.data
         int _pID = 0;       // ID
         int _pNUm = 0;      // 社員コード
         DateTime _pDate;    // 日付
-        Utility.frmMode fMode = new Utility.frmMode();  // フォームモード
+
+        Utility.frmMode fMode = new Utility.frmMode();  // フォームモード 2019/01/24 コメント化
+
         string outCsvFileName = string.Empty;   // 出力勤怠CSVファイル名
 
         genbaDataSet dts = new genbaDataSet();
@@ -304,15 +309,15 @@ namespace ryowa_Genba.data
             txtMemo.Enabled = true;     // 所定時間内で処理できない業務内容・他 特記事項            
             panel4.Enabled = true;      // 走行距離
 
-            // 休日出勤時の特殊勤務欄をロックしない 2019/01/04   
+            // 休日出勤時の特殊勤務欄をロックしない 2019/01/04   2019/01/15
             if (rBtnHolWork.Checked)
             {
                 panel2.Enabled = true;
-                chkJyosetsu.Enabled = false;
+                chkJyosetsu.Enabled = true;
                 chkTokushu.Enabled = true;
-                chkTooshi.Enabled = false;
-                chkYakan.Enabled = false;
-                chkShokumu.Enabled = false;
+                chkTooshi.Enabled = true;
+                chkYakan.Enabled = true;
+                chkShokumu.Enabled = true;
             }
             else if (rBtnWork.Checked)
             {
@@ -414,31 +419,61 @@ namespace ryowa_Genba.data
             // 日付（勤務日・休日）による画面制御
             dateChange(_pDate);
 
-            // 新規登録のとき
-            if (_pID == global.flgOff)
+            // 2019/01/25 : 社員番号と日付で新規か編集か判断する
+            if (!dts.T_勤怠.Any(a => a.社員ID == _pNUm && a.日付 == _pDate))
             {
+                // 勤怠データが存在しないとき
+                // 新規登録モード
+                fMode.Mode = global.FORM_ADDMODE;
+                linkLabel4.Text = "新規登録する";
+
                 // 社員コード
                 lblNum.Text = _pNUm.ToString();
 
                 // 日付
                 lblDate.Text = _pDate.ToShortDateString() + "（" + _pDate.ToString("ddd") + "）";
 
-                // フォームモード
-                fMode.Mode = global.FORM_ADDMODE;
-                linkLabel4.Text = "新規登録する";
-
                 // 工事コンボ
                 cmbKoujiSetIndex(_pDate);
             }
             else
             {
-                // 既存データ表示
-                dataShow(_pID);
-
-                // フォームモード
+                // 勤怠データが存在するとき
+                // 編集モード
                 fMode.Mode = global.FORM_EDITMODE;
                 linkLabel4.Text = "出勤簿の更新";
+
+                // 既存データ表示
+                dataShow(_pID);
             }
+
+
+
+            //// 新規登録のとき
+            //if (_pID == global.flgOff)
+            //{
+            //    // 社員コード
+            //    lblNum.Text = _pNUm.ToString();
+
+            //    // 日付
+            //    lblDate.Text = _pDate.ToShortDateString() + "（" + _pDate.ToString("ddd") + "）";
+
+            //    // フォームモード
+            //    //fMode.Mode = global.FORM_ADDMODE;
+            //    linkLabel4.Text = "新規登録する";
+
+            //    // 工事コンボ
+            //    cmbKoujiSetIndex(_pDate);
+            //}
+            //else
+            //{
+            //    // フォームモード
+            //    //fMode.Mode = global.FORM_EDITMODE;
+            //    linkLabel4.Text = "出勤簿の更新";
+
+            //    // 既存データ表示
+            //    dataShow(_pID);
+            //}
         }
 
         ///-------------------------------------------------------
@@ -1016,6 +1051,7 @@ namespace ryowa_Genba.data
                 return;
             }
 
+            ////2019 / 01 / 24 コメント化
             if (fMode.Mode == global.FORM_ADDMODE)
             {
                 // データ登録
@@ -1026,6 +1062,18 @@ namespace ryowa_Genba.data
                 // データ更新
                 dataUpdate(_pID);
             }
+
+            //// 2019/01/24 勤怠IDの有無で判断
+            //if (_pID == global.flgOff)
+            //{
+            //    // データ登録
+            //    dataAdd();
+            //}
+            //else
+            //{
+            //    // データ更新
+            //    dataUpdate(_pID);
+            //}
 
             // データベース更新
             kAdp.Update(dts.T_勤怠);
@@ -1582,11 +1630,19 @@ namespace ryowa_Genba.data
                 s.確認印 = global.flgOff;
             }
 
+            // 2019/01/24 コメント化
             if (fMode.Mode == global.FORM_ADDMODE)
             {
                 s.登録年月日 = DateTime.Now;
                 s.登録ユーザーID = global.loginUserID;
             }
+
+            //// 勤怠IDの有無で判断 2019/01/24
+            //if (_pID == global.flgOff)
+            //{
+            //    s.登録年月日 = DateTime.Now;
+            //    s.登録ユーザーID = global.loginUserID;
+            //}
 
             s.更新年月日 = DateTime.Now;
             s.更新ユーザーID = global.loginUserID;
