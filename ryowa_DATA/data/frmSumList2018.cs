@@ -224,7 +224,7 @@ namespace ryowa_DATA.data
             //label6.Text = Properties.Settings.Default.gengou; // 和暦から西暦へ 2018/07/13
 
             linkLabel1.Text = linkLabelKouji;   // ラベルを工事にする 2018/09/26
-            linkLabel1.Visible = false;         // 工事別社員別表示ラベル 2018/09/26
+            //linkLabel1.Visible = false;         // 工事別社員別表示ラベル 2018/09/26
         }
 
         ///--------------------------------------------------------------       
@@ -882,7 +882,7 @@ namespace ryowa_DATA.data
                     cs.sArray[0].sHaichiDays = t.sHaichiDays;   // 配置日数取得
                     cs.sArray[0].sJinkanhi = t.sJinkanhi;       // 人件費
                     cs.sArray[0].sGanbaDays = Utility.StrtoInt(t.sGanbaDays);           // 現場日数
-                    cs.sArray[0].sKinmuchiDays = Utility.StrtoInt(t.sKinmuchiDays);     // 勤務地日数
+                    cs.sArray[0].sKinmuchiDays = (decimal)Utility.StrtoDouble(t.sKinmuchiDays);     // 勤務地日数 2019/01/29
                     cs.sArray[0].sStayDays = Utility.StrtoInt(t.sStayDays);     // 宿泊日数
                     cs.sArray[0].sHolTM = (int)(t.sHolTM * 60);                 // 休日勤務時間
                     cs.sArray[0].sHouteiTM = (int)(t.sHouteiTM * 60);           // 法定休日勤務時間
@@ -991,6 +991,11 @@ namespace ryowa_DATA.data
                 else if (sd[i].sKinmuchiDays > 0)
                 {
                     g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays; // 勤務地
+                }
+                else
+                {
+                    // 勤務地日数がゼロのとき：2019/01/29
+                    g[cKinmuchiDays, r].Value = sd[i].sKinmuchiDays.ToString("#,###.#"); // 勤務地
                 }
             }
             else
@@ -1374,7 +1379,7 @@ namespace ryowa_DATA.data
                     oXlsBook = null;
 
                     GC.Collect();
-                    
+
                     //マウスポインタを元に戻す
                     this.Cursor = Cursors.Default;
                 }

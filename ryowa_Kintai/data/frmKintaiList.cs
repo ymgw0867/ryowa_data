@@ -957,9 +957,27 @@ namespace ryowa_Kintai.data
                 int hoteiD = 0;
                 Utility.getdaikyuTime(dts, out holD, out hoteiD, sYY, sMM, sNum, t.pID);
 
-                // 代休取得した時間を差し引く
-                hol -= holD;        
-                hotei -= hoteiD;
+                // 2019/04/18
+                if (hol < holD)
+                {
+                    hol = 0;
+                }
+                else
+                {
+                    // 代休取得した時間を差し引く
+                    hol -= holD;
+                }
+
+                // 2019/04/18
+                if (hotei < hoteiD)
+                {
+                    hotei = 0;
+                }
+                else
+                {
+                    // 代休取得した時間を差し引く
+                    hotei -= hoteiD;
+                }
 
                 /* ------------------------------------------------------------------
                  * 以下、固定残業時間を超過した時間を残業時間を表示する 2018/09/17
@@ -1054,7 +1072,7 @@ namespace ryowa_Kintai.data
         /// <param name="fZan">
         ///     該当社員の固定残業時間</param>
         ///------------------------------------------------------------------
-        private void fix2Zan(DataGridView g, int iX, string gCol, int sZan, ref double tlZan, double fZan)
+    private void fix2Zan(DataGridView g, int iX, string gCol, int sZan, ref double tlZan, double fZan)
         {
             // 該当項目残業時間がゼロなら表示して戻る
             if (sZan == global.flgOff)
@@ -1604,13 +1622,20 @@ namespace ryowa_Kintai.data
                     //int sYY = Utility.StrtoInt(txtYear.Text) + Properties.Settings.Default.rekiHosei;
                     int sYY = Utility.StrtoInt(txtYear.Text);   // 和暦から西暦へ 2018/07/13
                     DateTime dt = DateTime.Parse(sYY.ToString() + "/" + txtMonth.Text + "/01");
-                    dt = dt.AddMonths(1).AddDays(-1);
-                    oxlsPrintSheet.Cells[39, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), dt);
+
+                    //dt = dt.AddMonths(1).AddDays(-1); // 2019/03/18 コメント化
+                    //oxlsPrintSheet.Cells[39, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), dt);  // 2019/03/18 コメント化
+
+                    DateTime edt = dt.AddMonths(1).AddDays(-1);     // 2019/03/18
+                    oxlsPrintSheet.Cells[39, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), edt);    // 2019/03/18
 
                     // 前月末走行距離
-                    dt = dt.AddMonths(-1);
-                    oxlsPrintSheet.Cells[40, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), dt);
-                    
+                    //dt = dt.AddMonths(-1);    // 2019/03/18 コメント化
+                    //oxlsPrintSheet.Cells[40, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), dt);   // 2019/03/18 コメント化
+
+                    DateTime edt2 = dt.AddDays(-1);     // 2019/03/18
+                    oxlsPrintSheet.Cells[40, 15] = getKmAll(Utility.StrtoInt(txtNum.Text), edt2);     // 2019/03/18
+
                     //マウスポインタを元に戻す
                     this.Cursor = Cursors.Default;
                     

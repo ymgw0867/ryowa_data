@@ -26,7 +26,7 @@ namespace ryowa_DATA.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\RYOWA_DATA\\MDB\\ryowa.mdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\工事本部\\RYOWA_DATA\\MDB\\ryowa.mdb")]
         public string ryowaConnectionString {
             get {
                 return ((string)(this["ryowaConnectionString"]));
@@ -188,16 +188,6 @@ namespace ryowa_DATA.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\RYOWA_DATA\\MDB\\ryowa_Temp.mdb")]
-        public string mdbPathTemp {
-            get {
-                return ((string)(this["mdbPathTemp"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("c:\\ryowa_data\\MDB\\")]
         public string mdbPath {
             get {
@@ -248,6 +238,16 @@ namespace ryowa_DATA.Properties {
         public string mdbOlePath {
             get {
                 return ((string)(this["mdbOlePath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\\工事本部\\RYOWA_DATA\\MDB\\ryowa.mdb")]
+        public string mdbPathTemp {
+            get {
+                return ((string)(this["mdbPathTemp"]));
             }
         }
     }
