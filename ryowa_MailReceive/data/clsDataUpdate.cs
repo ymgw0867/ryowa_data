@@ -901,15 +901,27 @@ namespace ryowa_MailReceive.data
                         // 勤怠データを取得
                         var t = dts.T_勤怠.Single(a => a.日付 == sDt && a.社員ID == pNum);
 
-                        // 氏名
-                        if (t.M_社員Row != null)
+                        // 社員名呼出 FillBySCodeに変更：2019/06/11
+                        if (sAdp.FillBySCode(dts.M_社員, pNum) > 0)
                         {
-                            oxlsPrintSheet.Cells[2, 2] = t.M_社員Row.氏名;
+                            var s = dts.M_社員.Single(a => a.ID == pNum);
+                            oxlsPrintSheet.Cells[2, 2] = s.氏名;
                         }
                         else
                         {
                             oxlsPrintSheet.Cells[2, 2] = "";
                         }
+
+                        // コメント化 2019/06/11
+                        //// 氏名
+                        //if (t.M_社員Row != null)
+                        //{
+                        //    oxlsPrintSheet.Cells[2, 2] = t.M_社員Row.氏名;
+                        //}
+                        //else
+                        //{
+                        //    oxlsPrintSheet.Cells[2, 2] = "";
+                        //}
 
                         // 印字行
                         eRow = S_GYO + i;
