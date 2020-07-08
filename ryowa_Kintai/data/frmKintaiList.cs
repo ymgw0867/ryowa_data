@@ -950,7 +950,7 @@ namespace ryowa_Kintai.data
                 // 工事部署ごとの休日勤務時間・法定休日勤務時間を求める
                 int hol = 0;
                 int hotei = 0;
-                Utility.getHolTime(dts.T_勤怠, out hol, out hotei, t.pID, sYY, sMM, sNum);
+                    Utility.getHolTime(dts.T_勤怠, out hol, out hotei, t.pID, sYY, sMM, sNum);
 
                 // 工事部署ごとの代休時間を求める
                 int holD = 0;

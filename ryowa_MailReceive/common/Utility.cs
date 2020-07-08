@@ -791,8 +791,9 @@ namespace ryowa_MailReceive.common
                 spanMin += Utility.GetTimeSpan(stTM, edTM).TotalMinutes;
             }
 
-            // 休憩時間を差し引く
-            int rTM = Properties.Settings.Default.restTime + item.休憩;
+            // 休憩時間を差し引く : 休日出勤時の休憩時間 2時間マイナスしない 2020/07/06
+            //int rTM = Properties.Settings.Default.restTime + item.休憩;
+            int rTM = item.休憩;
             if (spanMin > rTM)
             {
                 spanMin -= rTM;

@@ -1119,8 +1119,30 @@ namespace ryowa_MailReceive.data
                         Utility.getdaikyuTime(dts, out holD, out hoteiD, pYY, pMM, pNum, t.pID);
 
                         // 代休取得した時間を差し引く
-                        hol -= holD;
-                        hotei -= hoteiD;
+                        //hol -= holD;          // 2020/07/06 コメント化
+                        //hotei -= hoteiD;      // 2020/07/06 コメント化
+
+                        // 2020/07/06
+                        if (hol < holD)
+                        {
+                            hol = 0;
+                        }
+                        else
+                        {
+                            // 代休取得した時間を差し引く
+                            hol -= holD;
+                        }
+
+                        // 2020/07/06
+                        if (hotei < hoteiD)
+                        {
+                            hotei = 0;
+                        }
+                        else
+                        {
+                            // 代休取得した時間を差し引く
+                            hotei -= hoteiD;
+                        }
 
                         oxlsPrintSheet.Cells[S_GYO2 + iX, 7] = Utility.intToHhMM(hol);
                         oxlsPrintSheet.Cells[S_GYO2 + iX, 8] = Utility.intToHhMM(hotei);
